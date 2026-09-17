@@ -8,10 +8,12 @@
 - Pages Source: GitHub Actions, HTTPS 강제 사용
 - 배포 환경: github-pages, 허용 브랜치 main
 - 첫 실제 배포: [Site CI and Pages 실행 성공](https://github.com/bass131/ai-workflow-documents/actions/runs/35188920556), 검증한 소스 c2669e2
-- 공개 URL 검증 시각: 2026-09-17T06:17:14.132Z
+- 첫 공개 URL 검증 시각: 2026-09-17T06:17:14.132Z
+- 문서·디자인·지속 탐색 갱신: [Actions 실행 성공](https://github.com/bass131/ai-workflow-documents/actions/runs/35194648230), 소스 1fbe601
+- 갱신된 공개 사이트 검증 시각: 2026-09-17T07:31:10.293Z
 - 로컬 preview: http://127.0.0.1:4321/
 
-실제 공개 사이트의 홈·문서·목재 자산·한국어 검색과 결과 이동·모바일 메뉴·테마·404를 확인했습니다. 이후 변경도 아래 기본 브랜치 자동 배포 흐름을 사용합니다.
+실제 공개 사이트의 홈과 문서 7개, 한국어 검색과 결과 이동, 지속 문서 목록, 모바일의 비모달 목록과 본문 노출, 테마·종이·목재·캐릭터 자산, 404를 확인했습니다. 문서 목록은 사용자가 선택한 열림·닫힘 상태를 같은 origin에 저장합니다. 이후 변경도 아래 기본 브랜치 자동 배포 흐름을 사용합니다.
 
 배포 파일은 [.github/workflows/site.yml](../.github/workflows/site.yml)입니다. 호스팅은 GitHub Pages를 사용합니다.
 
