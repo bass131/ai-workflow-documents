@@ -1,0 +1,89 @@
+:root {
+  --sl-font: 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  --sl-content-width: 48rem;
+  --wf-accent: #dfaa69;
+  --wf-ink: #f2eadb;
+  --wf-muted: #c3b39a;
+  --wf-paper: #211d18;
+  --wf-soft: #2c261f;
+  --wf-rule: #574936;
+  --wf-action: #d1a265;
+  --wf-action-hover: #e3b77f;
+  --wf-action-text: #241a12;
+
+  --sl-color-accent-low: #3e2e20;
+  --sl-color-accent: #dfaa69;
+  --sl-color-accent-high: #efc796;
+  --sl-color-white: #f2eadb;
+  --sl-color-gray-1: #e6dbc8;
+  --sl-color-gray-2: #c3b39a;
+  --sl-color-gray-3: #a18c70;
+  --sl-color-gray-4: #76654f;
+  --sl-color-gray-5: #574936;
+  --sl-color-gray-6: #2c261f;
+  --sl-color-black: #211d18;
+  --sl-color-blue-low: #342a1f;
+  --sl-color-blue: #c48d4f;
+  --sl-color-blue-high: #e5b67d;
+  --sl-color-purple-low: #302920;
+  --sl-color-purple: #b99c70;
+  --sl-color-purple-high: #dcc8a6;
+  --sl-color-bg-nav: var(--wf-paper);
+  --sl-color-bg-sidebar: var(--wf-soft);
+  --sl-color-hairline: var(--wf-rule);
+  --sl-color-backdrop-overlay: #17130ec4;
+}
+:root[data-theme='light'] {
+  --wf-accent: #865126;
+  --wf-ink: #30291f;
+  --wf-muted: #6b5c48;
+  --wf-paper: #f7f3eb;
+  --wf-soft: #f0e7d8;
+  --wf-rule: #d1c4ad;
+  --wf-action: #795027;
+  --wf-action-hover: #603b20;
+  --wf-action-text: #fff8ed;
+
+  --sl-color-accent-low: #eadac1;
+  --sl-color-accent: #865126;
+  --sl-color-accent-high: #6e411f;
+  --sl-color-white: #30291f;
+  --sl-color-gray-1: #473b2c;
+  --sl-color-gray-2: #60513d;
+  --sl-color-gray-3: #7d6b53;
+  --sl-color-gray-4: #a28f72;
+  --sl-color-gray-5: #d1c4ad;
+  --sl-color-gray-6: #eee5d6;
+  --sl-color-gray-7: #f4eddf;
+  --sl-color-black: #f7f3eb;
+  --sl-color-blue-low: #eee2ce;
+  --sl-color-blue: #996434;
+  --sl-color-blue-high: #70421f;
+  --sl-color-purple-low: #eae3d3;
+  --sl-color-purple: #8b724c;
+  --sl-color-purple-high: #635030;
+  --sl-color-bg-nav: var(--wf-paper);
+  --sl-color-bg-sidebar: var(--wf-paper);
+  --sl-color-hairline: var(--wf-rule);
+}
+body { letter-spacing: -.012em; }
+.sl-markdown-content { line-height: 1.85; word-break: keep-all; overflow-wrap: anywhere; }
+.sl-markdown-content h2 { letter-spacing: -.04em; }
+.sl-markdown-content p, .sl-markdown-content li { font-size: 1rem; }
+.site-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 600;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.3;
+  letter-spacing: -.025em;
+}
+:focus-visible { outline: 3px solid var(--wf-accent); outline-offset: 4px; }
+.expressive-code {
+  --ec-codeBg: var(--wf-soft);
+  --ec-brdCol: var(--wf-rule);
+  --ec-frm-edBg: var(--wf-paper);
+  --ec-frm-edActTabBg: var(--wf-soft);
+  --ec-frm-edTabBarBg: var(--wf-paper);
+  --ec-frm-edTabBarBrdCol: var(--wf-rule);
+  --ec-frm-edActTabIndTopCol: var(--wf-accent);
+}

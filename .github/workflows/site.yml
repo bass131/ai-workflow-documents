@@ -1,0 +1,76 @@
+name: Site CI and Pages
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: Validate site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: read
+    env:
+      ASTRO_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+      - name: Read confirmed Pages metadata
+        id: pages
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        uses: actions/configure-pages@v6.0.0
+      - name: Build and validate Pages paths
+        env:
+          PAGES_URL: ${{ steps.pages.outputs.base_url || vars.PAGES_URL }}
+        run: |
+          npm run build:pages
+          npm run check:pages
+      - name: Install browser for deployed-path smoke checks
+        run: npx playwright install --with-deps chromium
+      - name: Check navigation, search, theme and mobile layout
+        env:
+          PAGES_URL: ${{ steps.pages.outputs.base_url || vars.PAGES_URL }}
+        run: npm run test:pages
+      - name: Package the verified Pages output
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: dist-pages
+
+  deploy:
+    name: Deploy Pages
+    needs: validate
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy verified artifact
+        id: deployment
+        uses: actions/deploy-pages@v5.0.1

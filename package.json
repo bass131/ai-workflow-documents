@@ -1,0 +1,31 @@
+{
+  "name": "moodies-agentic-workflow",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1",
+    "check": "astro check",
+    "test": "node --test scripts/pages-location.test.mjs",
+    "check:output": "node scripts/check-output.mjs",
+    "verify": "npm test && npm run check && npm run build && npm run check:output",
+    "build:pages": "node scripts/build-pages.mjs",
+    "check:pages": "node scripts/check-output.mjs --pages",
+    "test:pages": "node scripts/check-pages-browser.mjs"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.0",
+    "@astrojs/starlight": "0.42.1",
+    "astro": "7.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "playwright": "1.61.1",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=24.0.0 <25"
+  }
+}

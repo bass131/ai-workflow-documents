@@ -1,0 +1,11 @@
+{
+  "pagefind.clear_search": "검색어 지우기",
+  "pagefind.load_more": "더 보기",
+  "pagefind.search_label": "문서 검색",
+  "pagefind.filters_label": "필터",
+  "pagefind.zero_results": "[SEARCH_TERM]에 대한 검색 결과가 없습니다.",
+  "pagefind.many_results": "[SEARCH_TERM] 검색 결과 [COUNT]개",
+  "pagefind.one_result": "[SEARCH_TERM] 검색 결과 1개",
+  "pagefind.alt_search": "[SEARCH_TERM] 검색 결과가 없습니다. 대신 [DIFFERENT_TERM] 검색 결과를 표시합니다.",
+  "pagefind.searching": "검색 중…"
+}

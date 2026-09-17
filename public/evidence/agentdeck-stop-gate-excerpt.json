@@ -1,0 +1,79 @@
+{
+  "excerptNote": "Selected unchanged observations from a previous isolated hook evaluation. Local paths and unrelated conditions omitted; not a new run.",
+  "measuredAt": "2026-09-17T04:29:20.128Z",
+  "scope": "Isolated direct hook execution with synthetic fixtures; not a full agent or benchmark run",
+  "sourceHashes": {
+    "50_stop-gate.cjs": "1872fdecc0f0b82426acfed9a90c503c17ac6770ffda9de08c7618f7543c0903"
+  },
+  "sourceUnchanged": true,
+  "results": [
+    {
+      "name": "old-stamp-valid-labels-control",
+      "observations": [
+        {
+          "attempt": 1,
+          "decision": "block",
+          "verdict": "block",
+          "rule": "마감-요약-미실측"
+        },
+        {
+          "attempt": 2,
+          "decision": "block",
+          "verdict": "block",
+          "rule": "마감-요약-미실측"
+        },
+        {
+          "attempt": 3,
+          "decision": "block",
+          "verdict": "block",
+          "rule": "마감-요약-미실측"
+        },
+        {
+          "attempt": 4,
+          "decision": "allow",
+          "verdict": "에스컬레이션",
+          "rule": "연속-차단-상한"
+        }
+      ],
+      "finalArmed": false,
+      "finalBlocks": 3
+    },
+    {
+      "name": "missing-labels-repeated-stop",
+      "observations": [
+        {
+          "attempt": 1,
+          "decision": "block",
+          "verdict": "block",
+          "rule": "마감-요약-라벨-불충족"
+        },
+        {
+          "attempt": 2,
+          "decision": "block",
+          "verdict": "block",
+          "rule": "마감-요약-라벨-불충족"
+        },
+        {
+          "attempt": 3,
+          "decision": "block",
+          "verdict": "block",
+          "rule": "마감-요약-라벨-불충족"
+        },
+        {
+          "attempt": 4,
+          "decision": "block",
+          "verdict": "block",
+          "rule": "마감-요약-라벨-불충족"
+        },
+        {
+          "attempt": 5,
+          "decision": "block",
+          "verdict": "block",
+          "rule": "마감-요약-라벨-불충족"
+        }
+      ],
+      "finalArmed": true,
+      "finalBlocks": 5
+    }
+  ]
+}

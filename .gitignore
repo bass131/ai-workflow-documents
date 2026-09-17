@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-pages/
+.astro/
+.sites-runtime/
+.env
+.env.*
+playwright-report/
+test-results/
+work/
