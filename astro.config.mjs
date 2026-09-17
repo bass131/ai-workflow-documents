@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { documentNavigation } from './src/data/navigation';
 import { pagesLocation } from './scripts/pages-location.mjs';
 
 const pages = process.env.BUILD_TARGET === 'pages';
@@ -22,24 +23,10 @@ export default defineConfig({
       components: {
         Head: './src/components/DocumentHead.astro',
         Header: './src/components/WorkshopHeader.astro',
+        PageFrame: './src/components/WorkshopPageFrame.astro',
         Sidebar: './src/components/WorkshopSidebar.astro',
       },
-      sidebar: [
-        { label: '시작', items: [
-          { label: '홈', link: '/' },
-          { label: '전체 흐름', slug: 'workflow/overview' },
-        ] },
-        { label: '워크플로 가이드', items: [
-          { label: '단계 기록과 재개', slug: 'workflow/phase-and-resume' },
-          { label: 'TDD와 완료 검증', slug: 'workflow/verification' },
-        ] },
-        { label: '사례 연구', items: [
-          { label: 'AgentDeck에서 배운 것', slug: 'experiments/agentdeck' },
-        ] },
-        { label: '설계와 변화', items: [
-          { label: '현재 선택과 재검토 기준', slug: 'design/decisions' },
-        ] },
-      ],
+      sidebar: documentNavigation,
       tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 3 },
     }),
   ],

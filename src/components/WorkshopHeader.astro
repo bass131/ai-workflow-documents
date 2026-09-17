@@ -3,8 +3,10 @@ import Search from '@astrojs/starlight/components/Search.astro';
 import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
 import WorkshopBrand from './WorkshopBrand.astro';
 import SectionNav from './SectionNav.astro';
+import DocumentToggle from './DocumentToggle.astro';
 ---
 <div class="workshop-header">
+  <DocumentToggle />
   <WorkshopBrand />
   <SectionNav />
   <div class="workshop-tools print:hidden">

@@ -270,3 +270,120 @@ body { letter-spacing: -.012em; }
 .page > header.header .section-nav a[aria-current]::after { background: var(--wf-ink); }
 .page > header.header :focus-visible,
 .home-header :focus-visible { outline-color: var(--wf-ink); }
+
+
+/* An explicit, persistent disclosure shares state between home and document pages. */
+:root { --wf-drawer-width: 20rem; }
+:root:not([data-docs-open]) { --sl-content-inline-start: 0rem; }
+.workshop-page { flex-direction: column; min-height: 100vh; }
+.workshop-page > header.header {
+  inset: 0 0 auto;
+  width: 100%; height: var(--sl-nav-height);
+  z-index: 20;
+  padding-inline: var(--sl-nav-pad-x, 1.5rem);
+}
+.workshop-page .main-frame {
+  padding-block-start: calc(var(--sl-nav-height) + var(--sl-mobile-toc-height, 0rem));
+  padding-inline-start: var(--sl-content-inline-start);
+}
+.document-toggle, .drawer-close {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: .5rem; flex-shrink: 0;
+  min-height: 44px; min-width: 44px;
+  padding: .5rem .7rem;
+  border: 1px solid var(--wf-rule); border-radius: 4px;
+  color: var(--wf-ink); background: var(--wf-paper);
+  font: 600 .82rem/1.4 var(--sl-font);
+  cursor: pointer; touch-action: manipulation;
+  transition: background .16s, border-color .16s, transform .16s;
+}
+.document-toggle:hover, .document-toggle[aria-expanded='true'], .drawer-close:hover { border-color: var(--wf-accent); background: var(--wf-soft); }
+.document-toggle:active, .drawer-close:active { transform: scale(.96); }
+.document-toggle svg { flex: 0 0 20px; }
+.document-toggle span { white-space: nowrap; }
+.document-drawer {
+  box-sizing: border-box;
+  display: none; z-index: 15;
+  position: fixed; inset: var(--sl-nav-height) auto 0 0; margin: 0;
+  width: min(var(--wf-drawer-width), 100%); height: auto; max-height: calc(100dvh - var(--sl-nav-height));
+  padding: 0; border: 0; border-inline-end: 1px solid var(--wf-rule);
+  background: var(--wf-paper); color: var(--wf-ink);
+  overflow: auto; overscroll-behavior: contain;
+  box-shadow: 8px 0 24px var(--wf-frame-shadow);
+  opacity: 0; transform: translateX(-1rem);
+  transition: opacity .18s ease, transform .18s ease, display .18s allow-discrete;
+}
+[data-docs-open] .document-drawer { display: block; opacity: 1; transform: translateX(0); }
+@starting-style { [data-docs-open] .document-drawer { opacity: 0; transform: translateX(-1rem); } }
+.drawer-heading {
+  position: sticky; top: 0; z-index: 1;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .7rem 1rem; background: var(--wf-paper); border-bottom: 1px solid var(--wf-rule);
+}
+.drawer-heading h2 { margin: 0; font-size: .95rem; font-weight: 650; letter-spacing: -.02em; }
+.drawer-close { padding: .5rem; }
+.document-drawer .sidebar-content { padding: .7rem .75rem 1rem; }
+.document-drawer .workshop-sidebar { margin: 0; width: 100%; }
+.document-drawer ul { margin: 0; }
+.document-drawer .top-level > li + li { margin-block-start: .9rem; }
+.document-drawer :is(a, summary) { min-height: 44px; box-sizing: border-box; }
+.document-drawer .top-level a { display: block; }
+.document-drawer summary { display: flex; align-items: center; }
+.document-drawer a { transition: background .15s, color .15s, border-color .15s; }
+.home .document-drawer a[aria-current='page'] { color: var(--wf-ink); }
+.home .document-drawer .large { color: var(--wf-muted); }
+.home .document-drawer .caret { width: 20px; height: 20px; }
+.home sl-sidebar-restore { display: none; }
+.home .document-drawer li { list-style: none; }
+.home .document-drawer ul { padding: 0; }
+.home .document-drawer summary { list-style: none; }
+.home .document-drawer a { text-decoration: none; }
+@media (min-width: 50rem) {
+  :root[data-docs-open] { --sl-content-inline-start: var(--wf-drawer-width); }
+  [data-docs-open] .home-body, [data-docs-open] .home-footer { margin-inline-start: var(--wf-drawer-width); }
+  [data-docs-open] .home-footer { width: calc(100% - var(--wf-drawer-width) - 80px); margin-inline-start: calc(var(--wf-drawer-width) + 40px); }
+}
+@media (max-width: 49.99rem) {
+  .document-drawer {
+    position: relative; inset: auto; width: 100%; height: min(36dvh, 20rem);
+    max-height: 20rem; border-inline-end: 0; border-block-end: 1px solid var(--wf-rule);
+    box-shadow: 0 2px 8px var(--wf-frame-shadow);
+  }
+  .workshop-page > .document-drawer { margin-block-start: var(--sl-nav-height); }
+  [data-docs-open] .workshop-page .main-frame { padding-block-start: 0; }
+  [data-docs-open] mobile-starlight-toc nav { position: static; }
+  .document-drawer .workshop-sidebar { max-width: none; }
+  .document-drawer .sidebar-content { padding-block-start: .5rem; }
+  .document-toggle { padding: .5rem; }
+  .document-toggle span { display: none; }
+  .workshop-header { gap: .45rem; }
+  .workshop-header .workshop-brand { font-size: .88rem; gap: .35rem; }
+  .workshop-header .workshop-brand img { width: 24px; height: 24px; flex-basis: 24px; }
+  .workshop-tools { gap: .25rem; }
+  .workshop-tools button[data-open-modal], .header-theme select { width: 44px; height: 44px; }
+  .header-theme .label-icon { inset-inline-start: .85rem; }
+}
+@media (min-width: 50rem) and (max-width: 79.99rem) { .workshop-header > .section-nav { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .document-drawer, .document-toggle, .drawer-close, .document-drawer a, .document-drawer .caret { transition: none !important; }
+  .document-drawer { transform: none !important; }
+}
+@media print {
+  .document-toggle, .document-drawer { display: none !important; }
+  .workshop-page .main-frame, .home-body { padding: 0; margin: 0; }
+}
+
+/* Static, seamless paper grain under the reading surface; controls stay opaque. */
+:root { --wf-paper-wash: linear-gradient(#1d1f20ed, #1d1f20ed); }
+:root[data-theme='light'] { --wf-paper-wash: linear-gradient(#f7f3ebcc, #f7f3ebcc); }
+body.home, .workshop-page .main-frame {
+  background-color: var(--wf-paper);
+  background-image: var(--wf-paper-wash), url('../assets/paper-grain.svg?no-inline');
+  background-size: auto, 384px 384px;
+  background-repeat: repeat;
+}
+@media print { body.home, .workshop-page .main-frame { background-image: none; } }
+
+/* Center the reading section in the available area; paragraph alignment is unchanged. */
+.workshop-page .main-frame > div:has(> .main-pane) { max-width: 80rem; margin-inline: auto; }
+.workshop-page .main-pane .sl-container { margin-inline: auto; }

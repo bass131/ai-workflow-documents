@@ -7,7 +7,7 @@ html {
 }
 body.home {
   margin: 0;
-  background: var(--wf-paper);
+  background-color: var(--wf-paper);
   color: var(--wf-ink);
   font:
     16px/1.7 "Segoe UI",
@@ -662,4 +662,65 @@ main,
   .home-header { column-gap: 8px; }
   .home-header .workshop-brand { font-size: .95rem; }
   .home-header .theme-control select { width: 94px; }
+}
+
+/* A consistent drawer entry point on home and documents. */
+.home-header {
+  display: flex; min-height: var(--sl-nav-height); height: var(--sl-nav-height);
+  padding: .75rem max(12px, calc((100vw - 1280px) / 2)); gap: 1rem;
+}
+.home-header .workshop-brand { font-size: 1.2rem; }
+.home-header .theme-control { position: relative; padding: 0 0 0 1rem; margin-inline-start: auto; }
+.home-header .home-theme-icon { display: none; }
+.home-header .section-nav { gap: 1.3rem; }
+.workshop-mascot { animation: mascot-arrive .65s ease-out both; }
+.workshop-mascot img { display: block; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 3px var(--wf-frame-shadow)); }
+@keyframes mascot-arrive { from { opacity: 0; transform: translateY(7px) rotate(-4deg); } to { opacity: 1; transform: none; } }
+.reading-card, .primary-link, .scenario-buttons button { transition: transform .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease; }
+.reading-card:focus-visible, .primary-link:focus-visible { transform: translateY(-2px); }
+.reading-card:active, .primary-link:active, .scenario-buttons button:active { transform: translateY(1px); }
+.reading-card .card-arrow, .text-link > span, .primary-link > span { transition: transform .16s ease; }
+.reading-card:focus-visible .card-arrow { transform: translate(2px, -2px); }
+.section-nav a::after { transition: width .16s; }
+@media (hover: hover) {
+  .reading-card:hover, .primary-link:hover { transform: translateY(-2px); box-shadow: 0 4px 10px var(--wf-frame-shadow); }
+  .reading-card:hover .card-arrow { transform: translate(2px, -2px); }
+  .text-link:hover > span, .primary-link:hover > span { transform: translateX(3px); }
+}
+@media (max-width: 74.99rem) {
+  .home-header .section-nav { display: none; }
+  .home-header .theme-control { border: 0; padding: 0; }
+}
+@media (max-width: 49.99rem) {
+  .home-header { gap: .5rem; }
+  .home-header .workshop-brand { font-size: .92rem; gap: .4rem; }
+  .home-header .workshop-brand img { width: 24px; height: 24px; flex-basis: 24px; }
+  .home-header .workshop-brand-name { display: grid; gap: .12rem; }
+  .home-header .theme-control select { width: 44px; height: 44px; padding: 0; color: transparent; }
+  .home-header .theme-control option { color: var(--wf-ink); }
+  .home-header .home-theme-icon { display: block; position: absolute; inset: 12px; pointer-events: none; color: var(--wf-ink); }
+}
+@media (min-width: 50rem) and (max-width: 74.99rem) {
+  [data-docs-open] .intro, [data-docs-open] .scenario-layout, [data-docs-open] .reading-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workshop-mascot { animation: none; }
+  .reading-card, .primary-link, .scenario-buttons button, .card-arrow, .text-link > span, .primary-link > span { transform: none !important; transition: none !important; }
+}
+
+.home .drawer-heading h2 { font-size: .95rem; letter-spacing: -.02em; }
+
+/* The character and headline form one unit, including on narrow screens. */
+.intro-title { display: flex; align-items: center; gap: clamp(.6rem, 1.1vw, 1rem); margin: 20px 0 22px; }
+.intro-title .workshop-mascot { width: clamp(80px, 9vw, 128px); height: auto; aspect-ratio: 1; flex: 0 0 clamp(80px, 9vw, 128px); }
+.home .intro-title h1 { min-width: 0; font-size: clamp(1.85rem, 3.1vw, 2.8rem); margin: 0; }
+@media (min-width: 701px) and (max-width: 1050px) {
+  .intro { grid-template-columns: 1fr; }
+  .intro-title { max-width: 42rem; }
+  .home .intro-title h1 { font-size: 2.6rem; }
+}
+@media (max-width: 700px) {
+  .intro-title { gap: .5rem; }
+  .intro-title .workshop-mascot { width: clamp(52px, 16vw, 86px); flex-basis: clamp(52px, 16vw, 86px); }
+  .home .intro-title h1 { font-size: clamp(1.26rem, 5.8vw, 2.4rem); line-height: 1.5; letter-spacing: -.06em; }
 }

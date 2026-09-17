@@ -7,5 +7,7 @@
   "pagefind.many_results": "[SEARCH_TERM] 검색 결과 [COUNT]개",
   "pagefind.one_result": "[SEARCH_TERM] 검색 결과 1개",
   "pagefind.alt_search": "[SEARCH_TERM] 검색 결과가 없습니다. 대신 [DIFFERENT_TERM] 검색 결과를 표시합니다.",
-  "pagefind.searching": "검색 중…"
+  "pagefind.searching": "검색 중…",
+  "tableOfContents.onThisPage": "이 페이지의 목차",
+  "sidebarNav.accessibleLabel": "문서 목록"
 }

@@ -1,0 +1,14 @@
+---
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+import type { StarlightRouteData } from '@astrojs/starlight/route-data';
+import { documentNavigation } from '../data/navigation';
+const base = import.meta.env.BASE_URL;
+const sidebar: StarlightRouteData['sidebar'] = documentNavigation.map(group => ({
+  type: 'group', label: group.label, collapsed: false, badge: undefined,
+  entries: group.items.map(item => {
+    const href = item.slug ? base + item.slug + '/' : base + (item.link || '/').replace(/^\//, '');
+    return { type: 'link', label: item.label, href, isCurrent: href === Astro.url.pathname, attrs: {}, badge: undefined };
+  }),
+}));
+---
+<div class="workshop-sidebar"><SidebarSublist sublist={sidebar} /></div>

@@ -1,0 +1,9 @@
+---
+import DocumentDrawer from './DocumentDrawer.astro';
+const { hasSidebar } = Astro.locals.starlightRoute;
+---
+<div class="page sl-flex workshop-page">
+  <header class="header"><slot name="header" /></header>
+  {hasSidebar && <DocumentDrawer><slot name="sidebar" /></DocumentDrawer>}
+  <div class="main-frame"><slot /></div>
+</div>

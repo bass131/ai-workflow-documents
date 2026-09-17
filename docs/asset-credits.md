@@ -17,3 +17,7 @@ MaterialStyles.astro에서 Astro getImage로 768 × 768 WebP, 품질 80으로 �
 ## 디자인 참고
 
 [Flexoki](https://stephango.com/flexoki)의 종이와 잉크 대비, [Starlight Obsidian](https://fevol.github.io/starlight-theme-obsidian/)의 읽기 중심 구조를 참고했습니다. [LinkPlank](https://www.framer.com/marketplace/components/linkplank/)와 [VELORA](https://www.framer.com/marketplace/templates/velora-space/)는 재질 사용 방식의 시각 참고만 했습니다. 이들의 코드·이미지·유료 템플릿을 복제하거나 프로젝트에 포함하지 않았습니다.
+
+## 목재 로봇 장식
+
+`src/assets/wooden-workshop-mascot.png`는 2026-09-17 내장 image_gen 도구로 생성하고 편집한 오리지널 목재 로봇 이미지입니다. 특정 외부 작가나 기존 캐릭터를 모방하지 않았습니다. AI 생성 자산으로 기록하며 CC0 이미지로 분류하지 않습니다. 홈의 장식에 사용하고 Astro가 투명도를 유지한 작은 WebP로 최적화합니다. 핵심 정보나 탐색 기능을 대신하지 않습니다.

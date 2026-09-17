@@ -3,6 +3,7 @@ import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync, readdirSync, mkdirSync } from 'node:fs';
 import { resolve, extname, sep } from 'node:path';
 import assert from 'node:assert/strict';
+import { checkDocumentDrawer } from './check-document-drawer.mjs';
 import { pagesLocation } from './pages-location.mjs';
 
 const { base } = pagesLocation();
@@ -33,11 +34,14 @@ try {
   browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: 'light' });
   const page = await context.newPage();
+  const ensureMenuOpen = async () => { if (await page.locator('.document-toggle').getAttribute('aria-expanded') === 'false') await page.locator('.document-toggle').click(); };
+  const ensureMenuClosed = async () => { if (await page.locator('.document-toggle').getAttribute('aria-expanded') === 'true') await page.locator('.document-toggle').click(); };
   page.setDefaultTimeout(15000);
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => { if (response.status() >= 400) errors.push(response.status() + ' ' + response.url()); });
   await page.goto(origin + base, { waitUntil: 'networkidle' });
 
+  await checkDocumentDrawer(page, context, origin, base, capture);
   const woodUrl = await page.locator('.flow').evaluate(element => getComputedStyle(element).backgroundImage.match(/url\("([^\"]+)"\)/)?.[1]);
   assert(woodUrl && new URL(woodUrl).pathname.startsWith(base), 'Wood image escaped Pages base');
   const wood = await context.request.get(woodUrl);
@@ -66,11 +70,13 @@ try {
   const tocLink = page.locator('.right-sidebar starlight-toc a').filter({ hasText: '02 · 필요한 만큼 나눈다' });
   await tocLink.click();
   await page.waitForFunction(() => [...document.querySelectorAll('.right-sidebar a')].some(link => link.textContent.includes('02 · 필요한 만큼 나눈다') && link.getAttribute('aria-current') === 'true'));
+  await ensureMenuOpen();
   const group = page.locator('.workshop-sidebar details').filter({ has: page.locator('summary', { hasText: '워크플로 가이드' }) });
   await group.locator('summary').click();
   assert.equal(await group.getAttribute('open'), null);
   await page.reload({ waitUntil: 'networkidle' });
   assert.equal(await group.getAttribute('open'), null, 'Sidebar group preference did not persist');
+  await ensureMenuOpen();
   await group.locator('summary').click();
   await page.keyboard.press('Control+k');
   await page.locator('dialog input').fill('재개');
@@ -101,12 +107,13 @@ try {
   await page.goto(origin + base, { waitUntil: 'networkidle' });
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Mobile homepage overflow');
   await page.getByRole('link', { name: '전체 흐름 읽기' }).click();
-  await page.getByRole('button', { name: '메뉴', exact: true }).click();
+  await ensureMenuOpen();
   await page.locator('#starlight__sidebar').getByRole('link', { name: '현재 선택과 재검토 기준', exact: true }).click();
   await page.waitForURL('**' + base + 'design/decisions/');
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Mobile document overflow');
   for (const theme of ['light', 'dark']) {
     await page.goto(origin + base, { waitUntil: 'networkidle' });
+    await ensureMenuClosed();
     await page.locator('#theme').selectOption(theme);
     await page.locator('[data-scenario=failure]').click();
     await capture(page, 'home-mobile-' + theme);
@@ -115,8 +122,7 @@ try {
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), theme + ' mobile overflow');
 
     await capture(page, 'docs-mobile-' + theme);
-    const menu = page.getByRole('button', { name: '메뉴', exact: true });
-    await menu.click();
+    await ensureMenuOpen();
 
     const menuWoodUrl = await page.locator('.workshop-sidebar').evaluate(async element => {
       const url = getComputedStyle(element).backgroundImage.match(/url\("([^\"]+)"\)/)?.[1];
@@ -125,9 +131,9 @@ try {
     });
     assert.equal(menuWoodUrl, woodUrl, 'Menu must share the optimized home texture');
     await capture(page, 'menu-mobile-' + theme);
-    assert(await page.locator('#starlight__sidebar').evaluate(el => el.matches(':popover-open')));
+    assert.equal(await page.locator('.document-toggle').getAttribute('aria-expanded'), 'true');
     await page.keyboard.press('Escape');
-    assert.equal(await page.locator('#starlight__sidebar').evaluate(el => el.matches(':popover-open')), false);
+    assert.equal(await page.locator('.document-toggle').getAttribute('aria-expanded'), 'false');
     await page.locator('button[data-open-modal]:visible').click();
     await page.locator('dialog input').fill('AgentDeck');
     await page.locator('.pagefind-ui__result-link').first().waitFor();
@@ -155,7 +161,7 @@ try {
       await page.goto(origin + base + route, { waitUntil: 'networkidle' });
       const header = await page.evaluate(() => {
         const element = document.querySelector('body.home .home-header, .page > header.header');
-        const controls = [...element.querySelectorAll('a,button[data-open-modal],select')];
+        const controls = [...element.querySelectorAll('a,button[data-open-modal],button.document-toggle,select')];
         const menu = document.querySelector('.sl-menu-button');
         if (menu) controls.push(menu);
         const boxes = controls.filter(control => control.checkVisibility()).map(control => control.getBoundingClientRect());
