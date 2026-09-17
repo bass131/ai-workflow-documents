@@ -3,11 +3,13 @@
 ## 현재 대상과 상태
 
 - 인증 확인 계정: `bass131`
-- 사용자가 정한 저장소 이름: `moodies-agentic-workflow`
+- 사용자가 정한 저장소 이름: `ai-workflow-documents`
+- 공개 대상: `bass131/ai-workflow-documents`
+- Pages 하위 경로: `/ai-workflow-documents/`
 - 로컬 브랜치: `main`
 - 원격: 아직 생성되지 않음. 연결된 remote 없음.
 - 현재 상태: 로컬 파이프라인과 하위 경로 검증 완료, Actions 실행·공개 배포 전.
-- 외부 생성/공개 단계는 자동 승인 검토에서 공개 소스 전송 승인 부족으로 거절되어, 명시적 공개 승인 후 진행해야 함.
+- 공개 단계는 아직 실행하지 않음. 원 작업의 사용자 승인이 전달되었으나 실행 승인 검토가 위임 메시지의 승인 출처를 인정하지 않아 차단된 상태. 새 이름의 공개 대상에 대한 직접 승인 확인이 필요함.
 - 로컬 preview: http://127.0.0.1:4321/
 
 배포 파일은 [.github/workflows/site.yml](../.github/workflows/site.yml)입니다. 호스팅은 GitHub Pages를 사용합니다.
