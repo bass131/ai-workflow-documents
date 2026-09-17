@@ -2,15 +2,16 @@
 
 ## 현재 대상과 상태
 
-- 인증 확인 계정: `bass131`
-- 사용자가 정한 저장소 이름: `ai-workflow-documents`
-- 공개 대상: `bass131/ai-workflow-documents`
-- Pages 하위 경로: `/ai-workflow-documents/`
-- 로컬 브랜치: `main`
-- 원격: 아직 생성되지 않음. 연결된 remote 없음.
-- 현재 상태: 로컬 파이프라인과 하위 경로 검증 완료, Actions 실행·공개 배포 전.
-- 공개 단계는 아직 실행하지 않음. 원 작업의 사용자 승인이 전달되었으나 실행 승인 검토가 위임 메시지의 승인 출처를 인정하지 않아 차단된 상태. 새 이름의 공개 대상에 대한 직접 승인 확인이 필요함.
+- 공개 저장소: [bass131/ai-workflow-documents](https://github.com/bass131/ai-workflow-documents)
+- 공개 사이트: [Moodie’s Agentic Workflow](https://bass131.github.io/ai-workflow-documents/)
+- 기본 브랜치: main, origin은 이 공개 저장소의 HTTPS Git 주소
+- Pages Source: GitHub Actions, HTTPS 강제 사용
+- 배포 환경: github-pages, 허용 브랜치 main
+- 첫 실제 배포: [Site CI and Pages 실행 성공](https://github.com/bass131/ai-workflow-documents/actions/runs/35188920556), 검증한 소스 c2669e2
+- 공개 URL 검증 시각: 2026-09-17T06:17:14.132Z
 - 로컬 preview: http://127.0.0.1:4321/
+
+실제 공개 사이트의 홈·문서·목재 자산·한국어 검색과 결과 이동·모바일 메뉴·테마·404를 확인했습니다. 이후 변경도 아래 기본 브랜치 자동 배포 흐름을 사용합니다.
 
 배포 파일은 [.github/workflows/site.yml](../.github/workflows/site.yml)입니다. 호스팅은 GitHub Pages를 사용합니다.
 
@@ -34,23 +35,23 @@ Pages 주소는 [scripts/pages-location.mjs](../scripts/pages-location.mjs)에�
 npx playwright install chromium
 ```
 
-확정한 URL을 PowerShell의 현재 세션에 설정하고 검사합니다. 아래 주소는 테스트용 예시이며 실제 배포 주소가 아닙니다.
+현재 공개 URL을 PowerShell의 세션에 설정하고 같은 배포 경로를 검사합니다.
 
 ```powershell
-$env:PAGES_URL = 'https://example.github.io/path-check/'
+$env:PAGES_URL = 'https://bass131.github.io/ai-workflow-documents/'
 npm run build:pages
 npm run check:pages
 npm run test:pages
 Remove-Item Env:PAGES_URL
 ```
 
-브라우저 검사는 임시 loopback 서버를 직접 시작하고 종료합니다. 기존 4321 preview는 유지됩니다. 예시 경로 검사는 배포 가능성에 대한 확인이며 실제 공개 사이트 검증을 대체하지 않습니다.
+브라우저 검사는 임시 loopback 서버를 직접 시작하고 종료합니다. 기존 4321 preview는 유지됩니다. 로컬 배포 경로 검사는 실제 공개 사이트 검증을 대체하지 않습니다.
 
-## 첫 연결에서 필요한 설정
+## 설정된 배포 환경
 
-확인된 공개 저장소에 이 프로젝트만 연결합니다. Pages 설정의 Source는 **GitHub Actions**로 둡니다. 기본 브랜치 이름은 GitHub 저장소 메타데이터가 기준이며 배포 조건에 하드코딩하지 않습니다.
+이 프로젝트는 위 공개 저장소에 연결되어 있고, Pages 설정의 Source는 **GitHub Actions**입니다. 기본 브랜치 main은 GitHub 저장소 메타데이터에서 읽으며 배포 조건에 하드코딩하지 않습니다.
 
-가능하면 기본 브랜치 규칙에서 **Validate site** 검사를 필수로 지정합니다. 이 저장소의 배포 작업 자체도 해당 검증 성공을 요구합니다. `github-pages` environment의 배포 브랜치는 실제 기본 브랜치로 제한합니다.
+가능하면 기본 브랜치 규칙에서 **Validate site** 검사를 필수로 지정합니다. 이 저장소의 배포 작업 자체도 해당 검증 성공을 요구합니다. `github-pages` environment의 배포 브랜치는 main으로 제한되어 있습니다.
 
 일반 배포에는 개인 토큰 secret이 필요 없습니다. Actions의 `GITHUB_TOKEN`을 사용하며 검증 job은 contents/pages 읽기, 배포 job만 pages 쓰기와 id-token 쓰기를 가집니다. checkout은 인증 정보를 소스 작업 트리에 유지하지 않습니다.
 

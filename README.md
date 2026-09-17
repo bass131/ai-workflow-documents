@@ -2,7 +2,9 @@
 
 AI 개발의 목표·판단·검증 근거를 기록하는 한국어 포트폴리오와 문서 사이트입니다. 맞춤 홈, 상황 시뮬레이션, 워크플로 가이드, AgentDeck 사례, 설계 변화 기록이 있습니다. 실제 에이전트 실행기는 제안 단계입니다.
 
-현재 공개 대상 저장소 이름은 `bass131/ai-workflow-documents`입니다. 사이트명은 Moodie’s Agentic Workflow를 유지합니다. 실제 생성·배포 상태와 공개 링크의 기준은 [배포 안내](docs/deployment.md)입니다.
+[공개 사이트](https://bass131.github.io/ai-workflow-documents/) · [GitHub 저장소](https://github.com/bass131/ai-workflow-documents) · [검사·배포 실행 기록](https://github.com/bass131/ai-workflow-documents/actions/workflows/site.yml)
+
+GitHub Pages에서 공개 운영 중입니다. main에 반영한 변경은 설정·빌드·브라우저 검사를 통과하면 자동 배포됩니다. 저장소 이름은 ai-workflow-documents, 사이트명은 Moodie’s Agentic Workflow입니다. 갱신과 복구 방법은 [배포 안내](docs/deployment.md)를 따릅니다.
 
 ## 시작
 

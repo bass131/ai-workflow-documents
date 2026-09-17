@@ -95,3 +95,13 @@ npm run preview -- --port 4321
 - 새 경로의 Pages 브라우저 검사 통과: 한국어 검색·결과 이동, 상황·키보드, 테마, 모바일 메뉴, 목차, 헤더, 404.
 - site/base는 확인한 환경 설정과 저장소 메타데이터에서 계산하므로 코드에 이전 저장소 경로를 고정하지 않음.
 - 원격 생성/업로드 명령은 실행 전 자동 승인 검토에서 거절됨. 원 작업의 승인 전달 메시지가 직접 사용자 승인으로 인정되지 않은 것이 이유이며, 공개 저장소나 remote는 아직 없음.
+
+## 2026-09-17 · 첫 실제 공개 배포
+
+- 사용자가 제작 작업의 승인 질문에 직접 응답한 뒤 공개 저장소 [bass131/ai-workflow-documents](https://github.com/bass131/ai-workflow-documents) 생성, main 이력 업로드.
+- GitHub Pages Source=workflow, HTTPS 사용, github-pages 환경의 허용 브랜치 main 확인.
+- 실제 Actions [35188920556](https://github.com/bass131/ai-workflow-documents/actions/runs/35188920556): Validate site와 Deploy Pages 성공. npm ci, 설정 테스트·타입 검사·로컬/Pages 빌드·출력 검사, Chromium 브라우저 검사, artifact 업로드 후 배포.
+- 실제 공개 URL [https://bass131.github.io/ai-workflow-documents/](https://bass131.github.io/ai-workflow-documents/), 확인 시각 2026-09-17T06:17:14.132Z.
+- 공개 서버의 홈과 문서5개, 사이트맵, 검색 JS가 HTTP200. 목재 WebP는 HTTP200/50002 bytes이며 올바른 저장소 하위 경로에서 로드.
+- 실제 공개 사이트에서 상황4종/Enter, 홈-문서 테마 공유, 전체 목재 상단바, 한국어 검색·결과 이동, 320px 메뉴·검색·가로 넘침, 사용자 정의404 확인. 브라우저/자산 오류 없음.
+- 이후 기본 브랜치 변경은 같은 필수 검증을 통과한 artifact만 다시 배포. 운영 문서에 실제 저장소·사이트·실행 링크와 갱신 방법 반영.
