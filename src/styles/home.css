@@ -611,3 +611,55 @@ main,
 .eyebrow {
   font-family: ui-monospace, Consolas, monospace;
 }
+
+/* A timber frame around a plain diagram sheet. */
+.home .flow {
+  border: 14px solid transparent;
+  border-block-width: 18px;
+  border-radius: 3px;
+  background:
+    linear-gradient(var(--wf-soft), var(--wf-soft)) padding-box,
+    var(--wf-wood-shade) border-box,
+    var(--wf-wood-image) border-box;
+  background-size: auto, auto, 384px 384px;
+  background-repeat: repeat;
+  box-shadow: 0 3px 12px var(--wf-frame-shadow), inset 0 0 0 1px var(--wf-rule);
+}
+@media (max-width: 700px) {
+  .home .flow { border-width: 10px; border-block-width: 14px; padding: 18px; }
+}
+
+.home-header {
+  width: 100%;
+  min-height: 88px;
+  padding: 16px max(24px, calc((100vw - 1200px) / 2));
+  gap: 24px;
+  margin: 0;
+  flex-wrap: nowrap;
+}
+.home-header .workshop-brand { font-size: 1.4rem; }
+.home-header .section-nav { width: auto; margin-inline-start: auto; gap: 1.6rem; }
+.home-header .section-nav a { color: var(--wf-ink); }
+.home-header .section-nav a:hover { color: var(--wf-ink); }
+.home-header .theme-control { border-inline-start: 1px solid var(--wf-rule); padding-inline-start: 24px; }
+.home-header .theme-control select { height: 40px; width: 126px; max-width: none; border-radius: 4px; font-size: 13px; }
+@media (max-width: 950px) {
+  .home-header { display: grid; grid-template-columns: 1fr auto; padding: 14px 24px 8px; gap: 4px 16px; }
+  .home-header .workshop-brand { font-size: 1.2rem; }
+  .home-header .theme-control { grid-column: 2; grid-row: 1; border: 0; padding: 0; }
+  .home-header .section-nav { grid-column: 1 / -1; grid-row: 2; margin: 0; justify-content: flex-start; gap: 1.6rem; }
+  .home-header .section-nav a { min-height: 36px; font-size: 13px; }
+}
+@media (max-width: 540px) {
+  .home-header { padding-inline: 18px; }
+  .home-header .workshop-brand { font-size: 1rem; gap: .5rem; }
+  .home-header .workshop-brand-name { display: grid; gap: .12rem; }
+  .home-header .theme-control select { width: 100px; padding-inline: 6px; font-size: 12px; }
+}
+
+.step-number { flex: 0 0 2ch; white-space: nowrap; }
+@media (max-width: 540px) {
+  .home-header { column-gap: 8px; }
+  .home-header .workshop-brand { font-size: .95rem; }
+  .home-header .theme-control select { width: 94px; }
+}

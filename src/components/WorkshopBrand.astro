@@ -1,0 +1,9 @@
+---
+interface Props { current?: boolean }
+const { current = false } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<a class="workshop-brand" href={base} aria-label="Moodie’s Agentic Workflow 홈" aria-current={current ? 'page' : undefined}>
+  <img src={base + 'favicon.svg'} width="32" height="32" alt="" />
+  <span class="workshop-brand-name" translate="no"><span>Moodie’s</span> <span>Agentic Workflow</span></span>
+</a>

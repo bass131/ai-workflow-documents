@@ -1,0 +1,11 @@
+---
+const base = import.meta.env.BASE_URL;
+const sections = [
+  { label: '가이드', path: 'workflow/overview/', section: 'workflow/' },
+  { label: '사례 연구', path: 'experiments/agentdeck/', section: 'experiments/' },
+  { label: '설계와 변화', path: 'design/decisions/', section: 'design/' },
+];
+---
+<nav class="section-nav" aria-label="주 메뉴">
+  {sections.map(({ label, path, section }) => <a href={base + path} aria-current={Astro.url.pathname.startsWith(base + section) ? 'true' : undefined}>{label}</a>)}
+</nav>

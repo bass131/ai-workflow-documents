@@ -36,6 +36,7 @@ Astro 7.3.3, Starlight 0.42.1, TypeScript, Pagefind 검색을 사용합니다. �
 | `src/content/i18n/ko.json` | 한국어 UI 문구 |
 | `src/scripts/scenarios.ts` | 홈의 설명용 상황 데이터 |
 | `src/styles/` | 공통 테마와 홈 레이아웃 |
+| `src/components/`, `src/assets/` | 기본 문서 셸의 외형과 최적화할 목재 이미지 |
 | `astro.config.mjs` | 사이드바, 언어, 빌드 설정 |
 | `public/` | 그대로 공개되는 favicon·선별 근거 파일 |
 | `scripts/` | Pages 경로 계산과 자동 검증 |
@@ -48,7 +49,7 @@ Astro 7.3.3, Starlight 0.42.1, TypeScript, Pagefind 검색을 사용합니다. �
 3. `npm run verify`를 실행하고 바뀐 화면을 확인합니다.
 4. PR에서 검사를 통과한 뒤 기본 브랜치에 병합하면 Pages 배포가 이어집니다.
 
-[문서 작성 가이드](docs/authoring.md)는 문서 구조, 링크·이미지, 문체와 근거 표기 기준을 설명합니다. [배포·갱신 가이드](docs/deployment.md)는 실제 저장소/배포 상태, 하위 경로 검사, 실패 확인과 복구 방법의 기준입니다. 에이전트용 시작점은 [AGENTS.md](AGENTS.md)입니다.
+[문서 작성 가이드](docs/authoring.md)는 문서 구조, 링크·이미지, 문체와 근거 표기 기준을 설명합니다. [배포·갱신 가이드](docs/deployment.md)는 실제 저장소/배포 상태, 하위 경로 검사, 실패 확인과 복구 방법의 기준입니다. 목재 이미지의 출처와 사용 조건은 [자산 기록](docs/asset-credits.md)에 있습니다. 에이전트용 시작점은 [AGENTS.md](AGENTS.md)입니다.
 
 ## 검증 명령
 

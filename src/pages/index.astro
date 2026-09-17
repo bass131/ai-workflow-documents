@@ -1,4 +1,7 @@
 ---
+import MaterialStyles from '../components/MaterialStyles.astro';
+import WorkshopBrand from '../components/WorkshopBrand.astro';
+import SectionNav from '../components/SectionNav.astro';
 import '../styles/theme.css';
 import '../styles/home.css';
 const base = import.meta.env.BASE_URL;
@@ -14,6 +17,7 @@ const steps = [
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
+    <MaterialStyles />
     {Astro.site && <link rel="canonical" href={new URL(base, Astro.site)} />}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Moodie’s Agentic Workflow — 판단과 근거를 남기는 개발</title>
@@ -27,11 +31,9 @@ const steps = [
   <body class="home">
     <a class="skip-link" href="#main">본문으로 이동</a>
     <header class="home-header">
-      <a class="brand" href={base} aria-label="Moodie’s Agentic Workflow 홈"><img src={href('favicon.svg')} width="30" height="30" alt="" />Moodie’s Agentic Workflow</a>
-      <nav aria-label="주 메뉴">
-        <a href={href('workflow/overview/')}>가이드</a>
-        <a href={href('experiments/agentdeck/')}>사례 연구</a><a href={href('design/decisions/')}>설계와 변화</a><label class="theme-control"><span class="sr-only">색상 테마</span><select id="theme" aria-label="색상 테마"><option value="auto">자동 테마</option><option value="light">밝은 테마</option><option value="dark">어두운 테마</option></select></label>
-      </nav>
+      <WorkshopBrand current />
+      <SectionNav />
+      <label class="theme-control"><span class="sr-only">색상 테마</span><select id="theme" aria-label="색상 테마"><option value="auto">자동 테마</option><option value="light">밝은 테마</option><option value="dark">어두운 테마</option></select></label>
     </header>
     <main id="main" data-pagefind-body>
       <section class="intro">

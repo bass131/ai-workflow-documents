@@ -1,37 +1,37 @@
 :root {
   --sl-font: 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
   --sl-content-width: 48rem;
-  --wf-accent: #dfaa69;
-  --wf-ink: #f2eadb;
-  --wf-muted: #c3b39a;
-  --wf-paper: #211d18;
-  --wf-soft: #2c261f;
-  --wf-rule: #574936;
-  --wf-action: #d1a265;
-  --wf-action-hover: #e3b77f;
-  --wf-action-text: #241a12;
+  --wf-accent: #d4b28a;
+  --wf-ink: #e6e7e4;
+  --wf-muted: #b9bfbe;
+  --wf-paper: #1d1f20;
+  --wf-soft: #25282a;
+  --wf-rule: #454c4e;
+  --wf-action: #c4a173;
+  --wf-action-hover: #ddbf99;
+  --wf-action-text: #191b1c;
 
-  --sl-color-accent-low: #3e2e20;
-  --sl-color-accent: #dfaa69;
-  --sl-color-accent-high: #efc796;
-  --sl-color-white: #f2eadb;
-  --sl-color-gray-1: #e6dbc8;
-  --sl-color-gray-2: #c3b39a;
-  --sl-color-gray-3: #a18c70;
-  --sl-color-gray-4: #76654f;
-  --sl-color-gray-5: #574936;
-  --sl-color-gray-6: #2c261f;
-  --sl-color-black: #211d18;
-  --sl-color-blue-low: #342a1f;
-  --sl-color-blue: #c48d4f;
-  --sl-color-blue-high: #e5b67d;
-  --sl-color-purple-low: #302920;
-  --sl-color-purple: #b99c70;
-  --sl-color-purple-high: #dcc8a6;
+  --sl-color-accent-low: #34312b;
+  --sl-color-accent: #d4b28a;
+  --sl-color-accent-high: #dbc3a4;
+  --sl-color-white: #e6e7e4;
+  --sl-color-gray-1: #dce0de;
+  --sl-color-gray-2: #c2c7c6;
+  --sl-color-gray-3: #a1aaa9;
+  --sl-color-gray-4: #798584;
+  --sl-color-gray-5: #454c4e;
+  --sl-color-gray-6: #25282a;
+  --sl-color-black: #1d1f20;
+  --sl-color-blue-low: #2a2e2f;
+  --sl-color-blue: #b6a083;
+  --sl-color-blue-high: #dfcfb8;
+  --sl-color-purple-low: #292d2e;
+  --sl-color-purple: #a69d8a;
+  --sl-color-purple-high: #d1cabb;
   --sl-color-bg-nav: var(--wf-paper);
   --sl-color-bg-sidebar: var(--wf-soft);
   --sl-color-hairline: var(--wf-rule);
-  --sl-color-backdrop-overlay: #17130ec4;
+  --sl-color-backdrop-overlay: #111517c4;
 }
 :root[data-theme='light'] {
   --wf-accent: #865126;
@@ -87,3 +87,186 @@ body { letter-spacing: -.012em; }
   --ec-frm-edTabBarBrdCol: var(--wf-rule);
   --ec-frm-edActTabIndTopCol: var(--wf-accent);
 }
+
+/* The bitmap stays in the frame; every label has an opaque reading surface. */
+:root {
+  --wf-wood-shade: linear-gradient(#151a1bb8, #151a1bb8);
+  --wf-frame-shadow: #0003;
+}
+:root[data-theme='light'] {
+  --wf-wood-shade: linear-gradient(#e7c99b22, #e7c99b22);
+  --wf-frame-shadow: #46341c14;
+}
+.workshop-sidebar,
+.right-sidebar-panel starlight-toc nav {
+  border: 12px solid transparent;
+  border-block-width: 16px;
+  border-radius: 3px;
+  background:
+    linear-gradient(var(--wf-paper), var(--wf-paper)) padding-box,
+    var(--wf-wood-shade) border-box,
+    var(--wf-wood-image) border-box;
+  background-size: auto, auto, 384px 384px;
+  background-repeat: repeat;
+  box-shadow: 0 2px 8px var(--wf-frame-shadow), inset 0 0 0 1px var(--wf-rule);
+}
+.workshop-sidebar { padding: 1rem .5rem .75rem; margin-block: .25rem 1.5rem; }
+.workshop-index-label {
+  margin: 0 .6rem 1.25rem;
+  padding-block-end: .85rem;
+  border-block-end: 1px solid var(--wf-rule);
+  color: var(--wf-ink);
+  font-size: .8rem;
+  font-weight: 650;
+  letter-spacing: .04em;
+}
+.workshop-sidebar .top-level > li + li { margin-block-start: 1.15rem; }
+.workshop-sidebar .large { font-size: .82rem; font-weight: 650; color: var(--wf-muted); }
+.workshop-sidebar summary { padding: .4rem .5rem; }
+.workshop-sidebar ul ul li { margin-inline-start: .45rem; padding-inline-start: .2rem; border-inline-start: 1px solid var(--wf-rule); }
+.workshop-sidebar a {
+  padding: .6rem .65rem;
+  font-size: .875rem;
+  line-height: 1.55;
+  border-inline-start: 3px solid transparent;
+  border-radius: 2px;
+  color: var(--wf-muted);
+}
+.workshop-sidebar a:hover { background: var(--wf-soft); color: var(--wf-ink); }
+.workshop-sidebar a[aria-current='page'] {
+  border-inline-start-color: var(--wf-accent);
+  background: var(--wf-soft);
+  color: var(--wf-ink);
+  font-weight: 650;
+}
+.workshop-sidebar :is(a, summary):focus-visible { outline-offset: 1px; }
+.right-sidebar-panel starlight-toc nav { padding: 1rem .5rem; border-width: 6px; border-block-width: 10px; }
+.right-sidebar-panel h2 { margin-inline: .5rem; margin-block-end: .8rem; font-size: .8rem; letter-spacing: .03em; }
+.right-sidebar-panel a {
+  border-inline-start: 2px solid transparent;
+  padding-block: .4rem;
+  color: var(--wf-muted);
+  font-size: .82rem;
+  line-height: 1.55;
+}
+.right-sidebar-panel a:hover { color: var(--wf-ink); background: var(--wf-soft); }
+.right-sidebar-panel a[aria-current='true'] {
+  border-inline-start-color: var(--wf-accent);
+  color: var(--wf-accent);
+  font-weight: 650;
+  background: var(--wf-soft);
+}
+@media (min-width: 50rem) {
+  .sidebar-pane .sidebar-content { padding-inline: .85rem; }
+}
+@media (max-width: 49.99rem) {
+  .workshop-sidebar { max-width: 30rem; width: 100%; margin-inline: auto; }
+}
+@media print {
+  .workshop-sidebar, .right-sidebar-panel starlight-toc nav { background: none; box-shadow: none; }
+}
+
+/* A full timber header with readable text and small opaque control surfaces. */
+:root { --sl-nav-height: 5rem; --wf-header-shade: linear-gradient(#192126a3, #192126a3); }
+:root[data-theme='light'] { --wf-header-shade: linear-gradient(#f5e7cf9e, #f5e7cf9e); }
+.page > header.header,
+.home-header {
+  position: relative;
+  background-image: var(--wf-header-shade), var(--wf-wood-image);
+  background-size: auto, 384px 384px;
+  background-repeat: repeat;
+  border-bottom: 1px solid var(--wf-rule);
+  box-shadow: 0 2px 6px var(--wf-frame-shadow);
+}
+.page > header.header { position: fixed; padding-block: .75rem; }
+
+.workshop-header { display: flex; align-items: center; justify-content: space-between; height: 100%; gap: 1.5rem; }
+.workshop-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+  flex-shrink: 0;
+  color: var(--wf-ink);
+  text-decoration: none;
+  font: 600 1.2rem/1.2 Georgia, 'Times New Roman', serif;
+  letter-spacing: -.025em;
+  border-radius: 2px;
+}
+.workshop-brand img { width: 32px; height: 32px; flex: 0 0 32px; box-shadow: 0 1px 3px var(--wf-frame-shadow); }
+.workshop-brand-name > span { white-space: nowrap; }
+.section-nav { display: flex; align-items: stretch; gap: 1.3rem; }
+.section-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: .35rem .1rem;
+  color: var(--wf-muted);
+  font-size: .875rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.section-nav a:hover { color: var(--wf-ink); }
+.section-nav a[aria-current] { color: var(--wf-ink); }
+.section-nav a[aria-current]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  inset-inline: 0;
+  height: 3px;
+  background: var(--wf-accent);
+}
+.workshop-tools { display: flex; align-items: center; gap: 1rem; margin-inline-start: auto; }
+.workshop-tools button[data-open-modal] {
+  min-width: 0;
+  width: clamp(9rem, 17vw, 16rem);
+  height: 2.5rem;
+  border: 1px solid var(--wf-rule);
+  border-radius: 4px;
+  padding: .5rem .7rem;
+  background: var(--wf-soft);
+  color: var(--wf-muted);
+  box-shadow: inset 0 1px 2px var(--wf-frame-shadow);
+}
+.workshop-tools button[data-open-modal]:hover { color: var(--wf-ink); border-color: var(--wf-accent); }
+.header-theme { border-inline-start: 1px solid var(--wf-rule); padding-inline-start: 1rem; }
+.header-theme select, .workshop-sidebar starlight-theme-select select {
+  width: 8.5rem;
+  margin: 0;
+  padding-inline: 1.7rem 1.6rem;
+  height: 2.5rem;
+  border: 1px solid var(--wf-rule);
+  border-radius: 4px;
+  color: var(--wf-muted);
+  background-color: var(--wf-paper);
+}
+.header-theme .label-icon { inset-inline-start: .55rem; }
+.header-theme .caret { inset-inline-end: .3rem; }
+.workshop-sidebar .mobile-preferences { display: none; }
+.sl-menu-button { border: 1px solid var(--wf-rule); border-radius: 4px; box-shadow: none; }
+@media (max-width: 71.99rem) {
+  .workshop-header > .section-nav { display: none; }
+}
+@media (max-width: 49.99rem) {
+  :root { --sl-nav-height: 4.5rem; --sl-nav-gap: .5rem; --sl-nav-pad-x: .75rem; }
+  .workshop-header { gap: .5rem; }
+  .workshop-header .workshop-brand { font-size: .92rem; gap: .45rem; }
+  .workshop-header .workshop-brand img { width: 28px; height: 28px; flex-basis: 28px; }
+  .workshop-header .workshop-brand-name { display: grid; gap: .12rem; }
+  .workshop-tools { gap: .4rem; }
+  .workshop-tools button[data-open-modal] { width: 2.25rem; height: 2.25rem; justify-content: center; padding: .35rem; }
+  .header-theme { border: 0; padding: 0; }
+  .header-theme select { width: 2.25rem; height: 2.25rem; padding: 0; color: transparent; }
+  .header-theme option { color: var(--wf-ink); }
+  .header-theme .label-icon { font-size: 1rem; inset-inline-start: .6rem; color: var(--wf-muted); }
+  .header-theme .caret { display: none; }
+}
+
+.page > header.header .section-nav a,
+.home-header .section-nav a { color: var(--wf-ink); }
+.page > header.header .section-nav a:hover,
+.home-header .section-nav a:hover { text-decoration: underline; text-underline-offset: .25em; }
+.page > header.header .section-nav a[aria-current]::after { background: var(--wf-ink); }
+.page > header.header :focus-visible,
+.home-header :focus-visible { outline-color: var(--wf-ink); }

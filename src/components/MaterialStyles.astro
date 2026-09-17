@@ -1,0 +1,8 @@
+---
+import { getImage } from 'astro:assets';
+import wood from '../assets/wood049-color.jpg';
+
+// One locally bundled color map, shared by the home and native documentation shell.
+const tile = await getImage({ src: wood, width: 768, format: 'webp', quality: 80 });
+---
+<style is:inline set:html={':root{--wf-wood-image:url("' + tile.src + '")}'} />

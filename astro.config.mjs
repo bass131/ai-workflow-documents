@@ -19,6 +19,11 @@ export default defineConfig({
       locales: { root: { label: '한국어', lang: 'ko' } },
       favicon: '/favicon.svg',
       customCss: ['./src/styles/theme.css'],
+      components: {
+        Head: './src/components/DocumentHead.astro',
+        Header: './src/components/WorkshopHeader.astro',
+        Sidebar: './src/components/WorkshopSidebar.astro',
+      },
       sidebar: [
         { label: '시작', items: [
           { label: '홈', link: '/' },

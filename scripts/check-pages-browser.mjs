@@ -7,7 +7,7 @@ import { pagesLocation } from './pages-location.mjs';
 
 const { base } = pagesLocation();
 const root = resolve('dist-pages');
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.json': 'application/json', '.wasm': 'application/wasm' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.json': 'application/json', '.wasm': 'application/wasm', '.webp': 'image/webp' };
 const server = createServer((request, response) => {
   try {
     const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
@@ -27,7 +27,7 @@ const errors = [];
 const screenshotDir = process.env.QA_SCREENSHOT_DIR;
 if (screenshotDir) mkdirSync(screenshotDir, { recursive: true });
 const capture = async (page, name) => {
-  if (screenshotDir) await page.screenshot({ path: resolve(screenshotDir, name + '.png'), fullPage: true, animations: 'disabled' });
+  if (screenshotDir) await page.screenshot({ path: resolve(screenshotDir, name + '.png'), fullPage: !name.startsWith('menu-'), animations: 'disabled' });
 };
 try {
   browser = await chromium.launch({ headless: true });
@@ -37,6 +37,15 @@ try {
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => { if (response.status() >= 400) errors.push(response.status() + ' ' + response.url()); });
   await page.goto(origin + base, { waitUntil: 'networkidle' });
+
+  const woodUrl = await page.locator('.flow').evaluate(element => getComputedStyle(element).backgroundImage.match(/url\("([^\"]+)"\)/)?.[1]);
+  assert(woodUrl && new URL(woodUrl).pathname.startsWith(base), 'Wood image escaped Pages base');
+  const wood = await context.request.get(woodUrl);
+  assert(wood.ok() && wood.headers()['content-type'].startsWith('image/webp'), 'Wood image missing or incorrect MIME');
+  assert((await wood.body()).length < 80000, 'Wood image exceeded 80KB budget');
+  assert.deepEqual(await page.evaluate(url => new Promise((resolve, reject) => {
+    const image = new Image(); image.onload = () => resolve([image.naturalWidth, image.naturalHeight]); image.onerror = reject; image.src = url;
+  }), woodUrl), [768, 768]);
   await capture(page, 'home-desktop-light');
   for (const [key, text] of Object.entries({ minor: '가정을 기록하고 진행', decision: '의존하는 작업만 대기', failure: '완료 불가 · 원인 확인', resume: '실제 상태와 기록을 대조' })) {
     const button = page.locator('[data-scenario=' + key + ']');
@@ -52,7 +61,17 @@ try {
   assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
   await capture(page, 'docs-desktop-dark');
   await page.locator('starlight-theme-select select:visible').selectOption('light');
+
   await capture(page, 'docs-desktop-light');
+  const tocLink = page.locator('.right-sidebar starlight-toc a').filter({ hasText: '02 · 필요한 만큼 나눈다' });
+  await tocLink.click();
+  await page.waitForFunction(() => [...document.querySelectorAll('.right-sidebar a')].some(link => link.textContent.includes('02 · 필요한 만큼 나눈다') && link.getAttribute('aria-current') === 'true'));
+  const group = page.locator('.workshop-sidebar details').filter({ has: page.locator('summary', { hasText: '워크플로 가이드' }) });
+  await group.locator('summary').click();
+  assert.equal(await group.getAttribute('open'), null);
+  await page.reload({ waitUntil: 'networkidle' });
+  assert.equal(await group.getAttribute('open'), null, 'Sidebar group preference did not persist');
+  await group.locator('summary').click();
   await page.keyboard.press('Control+k');
   await page.locator('dialog input').fill('재개');
   await page.locator('.pagefind-ui__result-link').first().waitFor();
@@ -94,7 +113,21 @@ try {
     await page.goto(origin + base + 'workflow/phase-and-resume/', { waitUntil: 'networkidle' });
     assert.equal(await page.locator('html').getAttribute('data-theme'), theme);
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), theme + ' mobile overflow');
+
     await capture(page, 'docs-mobile-' + theme);
+    const menu = page.getByRole('button', { name: '메뉴', exact: true });
+    await menu.click();
+
+    const menuWoodUrl = await page.locator('.workshop-sidebar').evaluate(async element => {
+      const url = getComputedStyle(element).backgroundImage.match(/url\("([^\"]+)"\)/)?.[1];
+      if (!url) throw new Error('Missing menu wood image');
+      const image = new Image(); image.src = url; await image.decode(); return url;
+    });
+    assert.equal(menuWoodUrl, woodUrl, 'Menu must share the optimized home texture');
+    await capture(page, 'menu-mobile-' + theme);
+    assert(await page.locator('#starlight__sidebar').evaluate(el => el.matches(':popover-open')));
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#starlight__sidebar').evaluate(el => el.matches(':popover-open')), false);
     await page.locator('button[data-open-modal]:visible').click();
     await page.locator('dialog input').fill('AgentDeck');
     await page.locator('.pagefind-ui__result-link').first().waitFor();
@@ -114,11 +147,42 @@ try {
     await page.goto(origin + base + route, { waitUntil: 'networkidle' });
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), '320px overflow');
   }
+
+  // The shared header must keep every control reachable at its layout breakpoints.
+  for (const width of [320, 768, 950, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of ['', 'workflow/overview/']) {
+      await page.goto(origin + base + route, { waitUntil: 'networkidle' });
+      const header = await page.evaluate(() => {
+        const element = document.querySelector('body.home .home-header, .page > header.header');
+        const controls = [...element.querySelectorAll('a,button[data-open-modal],select')];
+        const menu = document.querySelector('.sl-menu-button');
+        if (menu) controls.push(menu);
+        const boxes = controls.filter(control => control.checkVisibility()).map(control => control.getBoundingClientRect());
+        const overlap = boxes.some((a, i) => boxes.slice(i + 1).some(b => a.left < b.right - 1 && b.left < a.right - 1 && a.top < b.bottom - 1 && b.top < a.bottom - 1));
+        return { overlap, offscreen: boxes.some(box => box.left < 0 || box.right > innerWidth || box.top < 0), height: element.getBoundingClientRect().height, wood: getComputedStyle(element).backgroundImage.includes('wood049') };
+      });
+      assert(header.wood && !header.overlap && !header.offscreen && header.height <= 120, 'Header controls overlap or escape at ' + width + ': ' + route);
+    }
+  }
+  assert.equal(await page.locator('.section-nav a[aria-current]').textContent(), '가이드');
+  const anchor = page.locator('.right-sidebar starlight-toc a:visible').filter({ hasText: '02 · 필요한 만큼 나눈다' });
+  await anchor.click();
+  await page.waitForFunction(() => {
+    const heading = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    return heading && heading.getBoundingClientRect().top >= document.querySelector('.page > header.header').getBoundingClientRect().bottom;
+  });
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.locator('.header-theme select').selectOption('dark');
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
+  await page.locator('.header-theme select').selectOption('auto');
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
   const missing = await context.request.get(origin + base + 'not-a-page/');
   assert.equal(missing.status(), 404);
   assert((await missing.text()).includes('href="' + base + '"'), '404 home link must use absolute base');
   assert.deepEqual(errors, []);
-  console.log('PASS Pages browser smoke: ' + routes.length + ' routes, scenarios/keyboard, themes, Korean search and result navigation, light/dark mobile and search, system preference, 320px, mobile menu, 404 (' + base + ')');
+  console.log('PASS Pages browser smoke: ' + routes.length + ' routes, responsive headers/active section/anchor offset, optimized wood/base/size, sidebar persistence, TOC tracking, scenarios/keyboard, themes, Korean search and result navigation, light/dark mobile and search, system preference, 320px, mobile menu, 404 (' + base + ')');
 } finally {
   if (browser) await browser.close();
   await new Promise(done => server.close(done));

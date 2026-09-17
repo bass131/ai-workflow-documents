@@ -41,6 +41,25 @@ for (const [file, html] of texts) {
     references++;
   }
 }
+
+// CSS backgrounds include the locally optimized timber image and must obey the same base.
+for (const file of files.filter(file => /\.(?:css|html)$/.test(file))) {
+  const route = relative(root, file).split(sep).join('/');
+  const fileUrl = new URL(base + route, site);
+  const source = readFileSync(file, 'utf8');
+  const css = file.endsWith('.html') ? [...source.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)].map(match => match[1]).join('\n') : source;
+  for (const match of css.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)) {
+    const raw = match[1].trim();
+    if (/^(?:data:|#)/.test(raw)) continue;
+    const url = new URL(raw, fileUrl);
+    if (url.origin !== fileUrl.origin) continue;
+    assert(url.pathname.startsWith(base), route + ': CSS reference escaped base: ' + raw);
+    const target = resolve(root, decodeURIComponent(url.pathname.slice(base.length)));
+    assert(target.startsWith(root + sep) && existsSync(target), route + ': missing CSS asset: ' + raw);
+    references++;
+  }
+}
+
 // Only public output is scanned. Operational guides and test fixtures are never copied into dist.
 const privatePatterns = [
   /[A-Za-z]:[\\/](?:Users|Dev)[\\/]/,
