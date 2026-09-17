@@ -2,12 +2,15 @@
 import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
 import type { StarlightRouteData } from '@astrojs/starlight/route-data';
 import { documentNavigation } from '../data/navigation';
-const base = import.meta.env.BASE_URL;
+import { languageHref } from '../data/languages';
+const code = Astro.currentLocale ?? 'en';
+const label = (item: { label: string; translations?: Record<string,string> }) => item.translations?.[code] ?? item.label;
+const base = languageHref(code, '', import.meta.env.BASE_URL);
 const sidebar: StarlightRouteData['sidebar'] = documentNavigation.map(group => ({
-  type: 'group', label: group.label, collapsed: false, badge: undefined,
+  type: 'group', label: label(group), collapsed: false, badge: undefined,
   entries: group.items.map(item => {
     const href = item.slug ? base + item.slug + '/' : base + (item.link || '/').replace(/^\//, '');
-    return { type: 'link', label: item.label, href, isCurrent: href === Astro.url.pathname, attrs: {}, badge: undefined };
+    return { type: 'link', label: label(item), href, isCurrent: href === Astro.url.pathname, attrs: {}, badge: undefined };
   }),
 }));
 ---

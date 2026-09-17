@@ -1,3 +1,4 @@
+import { checkI18n } from './check-i18n-browser.mjs';
 import { chromium } from 'playwright';
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync, readdirSync, mkdirSync } from 'node:fs';
@@ -6,13 +7,14 @@ import assert from 'node:assert/strict';
 import { checkDocumentDrawer } from './check-document-drawer.mjs';
 import { pagesLocation } from './pages-location.mjs';
 
-const { base } = pagesLocation();
+const { base: siteBase } = pagesLocation();
+const base = siteBase + 'ko/';
 const root = resolve('dist-pages');
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.json': 'application/json', '.wasm': 'application/wasm', '.webp': 'image/webp' };
 const server = createServer((request, response) => {
   try {
     const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
-    let file = pathname.startsWith(base) ? resolve(root, pathname.slice(base.length)) : '';
+    let file = pathname.startsWith(siteBase) ? resolve(root, pathname.slice(siteBase.length)) : '';
     if (!file || !(file === root || file.startsWith(root + sep))) { response.writeHead(404); response.end(); return; }
     if (existsSync(file) && statSync(file).isDirectory()) file = resolve(file, 'index.html');
     const missing = !existsSync(file);
@@ -32,6 +34,7 @@ const capture = async (page, name) => {
 };
 try {
   browser = await chromium.launch({ headless: true });
+  await checkI18n(browser, origin, siteBase, capture);
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: 'light' });
   const page = await context.newPage();
   const ensureMenuOpen = async () => { if (await page.locator('.document-toggle').getAttribute('aria-expanded') === 'false') await page.locator('.document-toggle').click(); };
@@ -41,9 +44,9 @@ try {
   page.on('response', response => { if (response.status() >= 400) errors.push(response.status() + ' ' + response.url()); });
   await page.goto(origin + base, { waitUntil: 'networkidle' });
 
-  await checkDocumentDrawer(page, context, origin, base, capture);
+  await checkDocumentDrawer(page, context, origin, base, capture, siteBase);
   const woodUrl = await page.locator('.flow').evaluate(element => getComputedStyle(element).backgroundImage.match(/url\("([^\"]+)"\)/)?.[1]);
-  assert(woodUrl && new URL(woodUrl).pathname.startsWith(base), 'Wood image escaped Pages base');
+  assert(woodUrl && new URL(woodUrl).pathname.startsWith(siteBase), 'Wood image escaped Pages base');
   const wood = await context.request.get(woodUrl);
   assert(wood.ok() && wood.headers()['content-type'].startsWith('image/webp'), 'Wood image missing or incorrect MIME');
   assert((await wood.body()).length < 80000, 'Wood image exceeded 80KB budget');
@@ -100,7 +103,7 @@ try {
   }
   discover(root);
   for (const route of routes) {
-    const response = await context.request.get(origin + base + route);
+    const response = await context.request.get(origin + siteBase + route);
     assert(response.ok(), route);
   }
   await page.setViewportSize({ width: 390, height: 844 });
@@ -184,9 +187,9 @@ try {
   await page.locator('.header-theme select').selectOption('auto');
   await page.emulateMedia({ colorScheme: 'dark' });
   await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
-  const missing = await context.request.get(origin + base + 'not-a-page/');
+  const missing = await context.request.get(origin + siteBase + 'not-a-page/');
   assert.equal(missing.status(), 404);
-  assert((await missing.text()).includes('href="' + base + '"'), '404 home link must use absolute base');
+  assert((await missing.text()).includes('href="' + siteBase + '"'), '404 home link must use absolute base');
   assert.deepEqual(errors, []);
   console.log('PASS Pages browser smoke: ' + routes.length + ' routes, responsive headers/active section/anchor offset, optimized wood/base/size, sidebar persistence, TOC tracking, scenarios/keyboard, themes, Korean search and result navigation, light/dark mobile and search, system preference, 320px, mobile menu, 404 (' + base + ')');
 } finally {

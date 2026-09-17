@@ -1,17 +1,17 @@
 ---
-title: 자율성과 확인이 필요한 결정
-description: 맡겨서 진행할 선택과 함께 확인할 결정의 경계를 논의하는 장의 개요.
+title: Autonomy and decisions to confirm
+description: An outline for discussing which choices to delegate and which decisions need confirmation.
 ---
-이 장은 **진행을 맡길 선택과 확인이 필요한 결정**의 경계를 다룬다. 분업 수와 병렬 실행, 세션 교체는 메인이 작업에 맞춰 판단한다. 세부 판단 예시는 이후 대화에서 채운다.
+This chapter considers the boundary between **choices agents can make and decisions that need input**. The main agent chooses delegation, parallel execution, and session changes to suit the work. Detailed examples will be developed through further discussion.
 
-## 이 장에서 다룰 것
+## What this chapter will cover
 
-요청 범위 안의 작은 선택은 진행하고, 맡긴 권한을 넘는 중요한 결정은 함께 확인한다. 답을 기다릴 때도 독립적으로 할 수 있는 일은 이어간다. 되돌릴 수 있다는 이유만으로 요청 밖의 일을 추가하지 않는다.
+Proceed with small choices within the request; confirm consequential decisions beyond delegated authority. Continue independent work while waiting for an answer. Being reversible is not a reason to add work outside the request.
 
-## 함께 정할 항목
+## Topics to decide together
 
-- 어떤 선택을 자율적으로 맡기고 무엇을 확인할지
-- 대기 중인 일과 계속할 수 있는 일을 어떻게 구별할지
-- 메인의 분업·병렬 실행·세션 교체 판단을 설명할 사례와 기록 수준
+- Which choices to delegate and which to confirm
+- How to distinguish waiting work from work that can continue
+- Examples and the level of detail needed to explain the main agent’s delegation, parallel execution, and session changes
 
-관련 문서: [목표와 성공 기준](../goals-and-scope/) · [단계 기록과 재개](../phase-and-resume/)
+Related: [Goals and success criteria](../goals-and-scope/) · [Phase records and resuming work](../phase-and-resume/)

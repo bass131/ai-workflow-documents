@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { starlightLocales } from './src/data/languages';
 import { documentNavigation } from './src/data/navigation';
 import { pagesLocation } from './scripts/pages-location.mjs';
 
@@ -15,9 +16,9 @@ export default defineConfig({
     starlight({
       title: 'Moodie’s Agentic Workflow',
       disable404Route: true,
-      description: '목표, 판단, 검증의 근거를 남기는 AI 개발 워크플로.',
+      description: 'An AI development workflow that records goals, decisions, and verification evidence.',
       defaultLocale: 'root',
-      locales: { root: { label: '한국어', lang: 'ko' } },
+      locales: starlightLocales,
       favicon: '/favicon.svg',
       customCss: ['./src/styles/theme.css'],
       components: {

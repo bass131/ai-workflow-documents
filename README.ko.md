@@ -4,13 +4,13 @@
 
 AI 에이전트와 일하는 방법을 기록하는 공개 노트이자 포트폴리오입니다. 목표를 함께 정하고, 에이전트가 자율적으로 작업하며, 결과를 근거로 확인하는 과정을 다룹니다.
 
-**[사이트 방문하기 →](https://bass131.github.io/ai-workflow-documents/)**
+**[사이트 방문하기 →](https://bass131.github.io/ai-workflow-documents/ko/)**
 
-사이트 본문은 현재 한국어로 작성되어 있습니다. README는 영어와 한국어 중 선택해 읽을 수 있습니다.
+사이트와 README 모두 영어·한국어로 읽을 수 있습니다. 사이트의 첫 방문은 영어이며, 직접 선택한 언어는 같은 브라우저에서 기억합니다.
 
-[![목재 캐릭터, 워크플로 개요, 종이 질감 바탕으로 구성된 Moodie’s Agentic Workflow 홈 화면](docs/images/home-light.png)](https://bass131.github.io/ai-workflow-documents/)
+[![목재 캐릭터, 워크플로 개요, 종이 질감 바탕으로 구성된 Moodie’s Agentic Workflow 홈 화면](docs/images/home-light.png)](https://bass131.github.io/ai-workflow-documents/ko/)
 
-*2026년 9월 17일 로컬 미리보기에서 캡처한 밝은 테마의 실제 홈 화면입니다. 이미지를 누르면 사이트로 이동합니다.*
+*2026년 9월 17일 현재 로컬 미리보기에서 캡처한 언어 선택기가 있는 영어 홈의 밝은 테마 화면입니다. 이미지를 누르면 사이트로 이동합니다.*
 
 ## 이 사이트의 역할
 
@@ -30,10 +30,10 @@ AI를 활용한 개발 방식을 다듬는 과정과 판단의 이유를 보여�
 
 ## 처음 방문했다면
 
-1. [전체 흐름](https://bass131.github.io/ai-workflow-documents/workflow/overview/)에서 핵심 원칙을 읽습니다.
-2. [상황 시뮬레이션](https://bass131.github.io/ai-workflow-documents/#simulation)에서 그 원칙이 실제 판단에 어떻게 연결되는지 봅니다.
-3. [AgentDeck 사례](https://bass131.github.io/ai-workflow-documents/experiments/agentdeck/)에서 구체적인 관찰과 한계를 확인합니다.
-4. [설계와 변화](https://bass131.github.io/ai-workflow-documents/design/decisions/)에서 더 나은 근거가 생기면 바꿀 선택을 살펴봅니다.
+1. [전체 흐름](https://bass131.github.io/ai-workflow-documents/ko/workflow/overview/)에서 핵심 원칙을 읽습니다.
+2. [상황 시뮬레이션](https://bass131.github.io/ai-workflow-documents/ko/#simulation)에서 그 원칙이 실제 판단에 어떻게 연결되는지 봅니다.
+3. [AgentDeck 사례](https://bass131.github.io/ai-workflow-documents/ko/experiments/agentdeck/)에서 구체적인 관찰과 한계를 확인합니다.
+4. [설계와 변화](https://bass131.github.io/ai-workflow-documents/ko/design/decisions/)에서 더 나은 근거가 생기면 바꿀 선택을 살펴봅니다.
 
 ## 현재 범위
 

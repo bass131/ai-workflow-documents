@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 
-export async function checkDocumentDrawer(page, context, origin, base, capture = async () => {}) {
+export async function checkDocumentDrawer(page, context, origin, base, capture = async () => {}, assetBase = base) {
   const panel = page.locator('#starlight__sidebar');
   const toggle = page.locator('.document-toggle');
   const isOpen = async () => await toggle.getAttribute('aria-expanded') === 'true';
@@ -148,7 +148,7 @@ export async function checkDocumentDrawer(page, context, origin, base, capture =
   await page.goto(origin + base, { waitUntil: 'networkidle' });
   const mascot = page.locator('.workshop-mascot img');
   const asset = await mascot.getAttribute('src');
-  assert(new URL(asset, origin).pathname.startsWith(base));
+  assert(new URL(asset, origin).pathname.startsWith(assetBase));
   const response = await context.request.get(new URL(asset, origin).href);
   assert(response.ok() && response.headers()['content-type'].startsWith('image/webp'));
   assert((await response.body()).length < 50000);

@@ -1,6 +1,6 @@
 # Moodie’s Agentic Workflow
 
-한국어 개발 포트폴리오와 목표 기반 AI 워크플로 문서다. 현재 사이트와 상황 시뮬레이션은 구현되어 있지만 실제 에이전트 실행기는 제안 단계다.
+영어·한국어 개발 포트폴리오와 목표 기반 AI 워크플로 문서다. 현재 사이트와 상황 시뮬레이션은 구현되어 있지만 실제 에이전트 실행기는 제안 단계다.
 
 ## 먼저 볼 곳
 
@@ -9,7 +9,7 @@
 - 실제 배포 대상/상태와 갱신·복구: [docs/deployment.md](docs/deployment.md)
 - 당시 검증 기록: [VALIDATION.md](VALIDATION.md)
 
-스택은 Astro + Starlight + TypeScript, npm이다. 정확한 버전은 package.json / package-lock.json, 실행 Node 계열은 .node-version에 있다. 홈은 src/pages/index.astro, 문서는 src/content/docs, 공유 문서 목록은 src/data/navigation.ts, Starlight 설정은 astro.config.mjs, 공개 파일은 public, 검증 도구는 scripts에 있다.
+스택은 Astro + Starlight + TypeScript, npm이다. 정확한 버전은 package.json / package-lock.json, 실행 Node 계열은 .node-version에 있다. 홈은 src/components/WorkshopHome.astro, 문서는 src/content/docs, 공유 문서 목록은 src/data/navigation.ts, Starlight 설정은 astro.config.mjs, 공개 파일은 public, 검증 도구는 scripts에 있다.
 
 시각 방향은 목재·종이 색의 미니멀한 작업실이다. 밝음·어두움·자동 테마를 유지하며 공통 색상은 src/styles/theme.css에 모은다. 세부 기준은 작성 가이드에 있다.
 

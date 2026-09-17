@@ -6,11 +6,11 @@ A public notebook and portfolio about working with AI agents: how to agree on a 
 
 **[Visit the website →](https://bass131.github.io/ai-workflow-documents/)**
 
-The website is currently written in Korean. This README is available in English and Korean.
+The website and this README are available in English and Korean. The site opens in English by default and remembers your language selection in the same browser. [한국어 사이트 →](https://bass131.github.io/ai-workflow-documents/ko/)
 
 [![The Moodie’s Agentic Workflow homepage, with a wooden mascot, workflow overview, and paper-textured reading surface](docs/images/home-light.png)](https://bass131.github.io/ai-workflow-documents/)
 
-*Homepage in the light theme, captured from the local preview on September 17, 2026. Select the image to open the website.*
+*English homepage in the light theme with the language selector, captured from the current local preview on September 17, 2026. Select the image to open the website.*
 
 ## What this site is for
 

@@ -387,3 +387,35 @@ body.home, .workshop-page .main-frame {
 /* Center the reading section in the available area; paragraph alignment is unchanged. */
 .workshop-page .main-frame > div:has(> .main-pane) { max-width: 80rem; margin-inline: auto; }
 .workshop-page .main-pane .sl-container { margin-inline: auto; }
+
+/* Locale controls use Starlight's native Select on every page. */
+.language-control { flex-shrink: 0; }
+.language-control select { height: 44px; width: 7.5rem; margin: 0; padding-inline: 1.8rem 1.5rem; color: var(--wf-ink); background: var(--wf-paper); border: 1px solid var(--wf-rule); border-radius: 4px; }
+.language-control .label-icon { inset-inline-start: .5rem; }
+.language-control .caret { inset-inline-end: .2rem; }
+.language-control option { color: var(--wf-ink); background: var(--wf-paper); }
+@media (max-width: 89.99rem) { .workshop-header > .section-nav { display: none; } }
+@media (max-width: 49.99rem) {
+  .language-control select { width: 44px; padding: 0; color: transparent; }
+  .language-control .label-icon { inset-inline-start: .85rem; color: var(--wf-ink); font-size: 1rem; }
+  .language-control .caret { display: none; }
+  .workshop-header, .home-header { gap: .3rem; }
+  .workshop-header .workshop-brand { flex-shrink: 1; min-width: 0; }
+}
+@media (max-width: 23.99rem) {
+  .workshop-header .workshop-brand img { display: none; }
+  .workshop-header .workshop-brand { font-size: .76rem; letter-spacing: -.035em; }
+}
+
+.workshop-header .workshop-brand, .home-header .workshop-brand { min-height: 44px; }
+.workshop-tools button[data-open-modal], .header-theme select { height: 44px; }
+@media (max-width: 23.99rem) { .workshop-header .workshop-brand { font-size: .70rem; } }
+
+@media (min-width:50rem) and (max-width:74.99rem) {
+  .workshop-header { gap: .75rem; }
+  .workshop-header .workshop-brand { font-size: 1rem; }
+  .workshop-header .workshop-tools { gap: .5rem; }
+  .workshop-header .header-theme { padding-inline-start: .5rem; }
+  .workshop-header button[data-open-modal] { width: 44px; justify-content: center; padding: .5rem; }
+  .workshop-header button[data-open-modal] > span, .workshop-header button[data-open-modal] kbd { display: none; }
+}

@@ -9,5 +9,17 @@
   "pagefind.alt_search": "[SEARCH_TERM] 검색 결과가 없습니다. 대신 [DIFFERENT_TERM] 검색 결과를 표시합니다.",
   "pagefind.searching": "검색 중…",
   "tableOfContents.onThisPage": "이 페이지의 목차",
-  "sidebarNav.accessibleLabel": "문서 목록"
+  "sidebarNav.accessibleLabel": "문서 목록",
+  "workshop.documentList": "문서 목록",
+  "workshop.openDocuments": "문서 목록 열기",
+  "workshop.closeDocuments": "문서 목록 닫기",
+  "workshop.home": "홈",
+  "workshop.mainMenu": "주 메뉴",
+  "workshop.guide": "가이드",
+  "workshop.cases": "사례 연구",
+  "workshop.design": "설계와 변화",
+  "workshop.notFoundTitle": "페이지를 찾을 수 없습니다",
+  "workshop.notFoundDescription": "주소를 확인하거나 문서 목록을 열어 문서를 선택해 주세요.",
+  "workshop.notFoundText": "주소가 바뀌었거나 없는 페이지입니다. 문서 목록을 열어 문서를 선택하거나",
+  "workshop.returnHome": "홈으로 돌아가세요."
 }

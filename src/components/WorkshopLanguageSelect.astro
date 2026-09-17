@@ -1,0 +1,32 @@
+---
+import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
+import Select from '@astrojs/starlight/components/Select.astro';
+import { languages, language, equivalentPath, languageHref } from '../data/languages';
+const { standalone = false, notFound = false } = Astro.props;
+const current = language(Astro.currentLocale);
+const base = import.meta.env.BASE_URL;
+const targets = Object.fromEntries(languages.map(item => [item.code, notFound
+  ? languageHref(item.code, item.path ? '404/' : '404.html', base)
+  : equivalentPath(Astro.url.pathname, item.code, base)]));
+---
+<div class="language-control" data-targets={JSON.stringify(targets)} data-standalone={standalone || notFound}>
+  {(standalone || notFound) ? <Select icon="translate" label={Astro.locals.t('languageSelect.accessibleLabel')} width="7em" options={languages.map(item => ({value: targets[item.code], label: item.label, selected:item.code === current.code}))} /> : <LanguageSelect />}
+</div>
+<script>
+  import { languageStorageKey } from '../data/languages';
+  document.querySelectorAll<HTMLElement>('.language-control').forEach(control => {
+    const select = control.querySelector('select')!;
+    const targets = JSON.parse(control.dataset.targets!) as Record<string, string>;
+    control.addEventListener('change', () => {
+      const code = Object.keys(targets).find(key => targets[key] === select.value);
+      if (!code) return;
+      try { localStorage.setItem(languageStorageKey, code); } catch {}
+      // Native Starlight LanguageSelect handles documents; the same Select primitive handles home/404.
+      if (control.dataset.standalone === 'true') location.assign(select.value);
+    }, { capture: true });
+    window.addEventListener('pageshow', () => {
+      const selected = select.querySelector<HTMLOptionElement>('option[selected]');
+      if (selected) select.value = selected.value;
+    });
+  });
+</script>

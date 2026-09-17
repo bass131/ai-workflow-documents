@@ -1,11 +1,13 @@
 ---
-const base = import.meta.env.BASE_URL;
+import { languageHref } from '../data/languages';
+const t = Astro.locals.t;
+const base = languageHref(Astro.currentLocale ?? 'en', '', import.meta.env.BASE_URL);
 const sections = [
-  { label: '가이드', path: 'workflow/overview/', section: 'workflow/' },
-  { label: '사례 연구', path: 'experiments/agentdeck/', section: 'experiments/' },
-  { label: '설계와 변화', path: 'design/decisions/', section: 'design/' },
+  { label: t('workshop.guide'), path: 'workflow/overview/', section: 'workflow/' },
+  { label: t('workshop.cases'), path: 'experiments/agentdeck/', section: 'experiments/' },
+  { label: t('workshop.design'), path: 'design/decisions/', section: 'design/' },
 ];
 ---
-<nav class="section-nav" aria-label="주 메뉴">
+<nav class="section-nav" aria-label={t('workshop.mainMenu')}>
   {sections.map(({ label, path, section }) => <a href={base + path} aria-current={Astro.url.pathname.startsWith(base + section) ? 'true' : undefined}>{label}</a>)}
 </nav>

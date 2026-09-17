@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { resolve, relative, sep } from 'node:path';
 import assert from 'node:assert/strict';
+import { languages, languageFromPath } from '../src/data/languages.ts';
 import { pagesLocation } from './pages-location.mjs';
 
 const isPages = process.argv.includes('--pages');
@@ -21,7 +22,8 @@ const texts = new Map(htmlFiles.map(file => [file, readFileSync(file, 'utf8')]))
 for (const [file, html] of texts) {
   const route = relative(root, file).split(sep).join('/').replace(/index\.html$/, '');
   const pageUrl = new URL(base + route, site);
-  assert(/<html[^>]+lang="ko"/.test(html), route + ': missing Korean language');
+  const lang = languageFromPath(pageUrl.pathname, base).code;
+  assert(html.includes('lang="' + lang + '"'), route + ': incorrect page language');
   assert(/<title>[^<]+<\/title>/.test(html), route + ': missing title');
   for (const match of html.matchAll(/<(?:a|link|script|img|source)\b[^>]*?\b(?:href|src)="([^"]+)"[^>]*>/g)) {
     const raw = match[1].replaceAll('&amp;', '&');
@@ -75,5 +77,5 @@ for (const file of files.filter(file => /\.(?:html|js|json|css|svg|xml|txt|md|ma
 }
 assert(existsSync(resolve(root, 'pagefind/pagefind.js')), 'Missing search bundle');
 const index = JSON.parse(readFileSync(resolve(root, 'pagefind/pagefind-entry.json'), 'utf8'));
-assert(index.languages.ko?.page_count >= 5, 'Missing Korean search pages');
-console.log('PASS ' + htmlFiles.length + ' HTML pages, ' + references + ' internal references, Korean search index, public-output scan (' + base + ')');
+for (const {code} of languages) assert(index.languages[code]?.page_count >= 8, 'Missing search pages for ' + code);
+console.log('PASS ' + htmlFiles.length + ' HTML pages, ' + references + ' internal references, English/Korean search indexes, public-output scan (' + base + ')');

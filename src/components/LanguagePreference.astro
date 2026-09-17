@@ -1,0 +1,24 @@
+---
+import { languages, languageStorageKey, languageHref } from '../data/languages';
+const base = import.meta.env.BASE_URL;
+const { notFound = false } = Astro.props;
+const homes = Object.fromEntries(languages.map(item => [item.code, languageHref(item.code, '', base)]));
+const errorPages = Object.fromEntries(languages.map(item => [item.code, languageHref(item.code, item.path ? '404/' : '404.html', base)]));
+const codes = languages.map(item => item.code);
+const prefixes = languages.map(item => ({code:item.code, prefix: languageHref(item.code, '', base)})).filter(item => item.prefix !== base);
+---
+<script is:inline define:vars={{ base, homes, errorPages, codes, prefixes, notFound, key: languageStorageKey }}>
+  (() => {
+    // Only a visit to the representative home uses the saved choice. Document URLs win.
+    // Never infer a preference from navigator.language or from merely opening a link.
+    let saved;
+    try { saved = localStorage.getItem(key); } catch {}
+    if (!codes.includes(saved)) saved = codes[0];
+    let destination;
+    if (notFound) {
+      const explicit = prefixes.find(item => location.pathname.startsWith(item.prefix));
+      if (explicit) destination = errorPages[explicit.code];
+    } else if (location.pathname === base) destination = homes[saved];
+    if (destination && destination !== location.pathname) location.replace(destination + location.search + location.hash);
+  })();
+</script>

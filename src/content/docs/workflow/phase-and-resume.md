@@ -1,69 +1,69 @@
 ---
-title: 단계 기록과 재개
-description: 세션이 바뀌어도 목표, 이유, 검사 근거, 남은 예산을 이어가는 최소 기록.
+title: Phase records and resuming work
+description: Minimal records that carry goals, reasons, verification evidence, and remaining budgets across sessions.
 ---
-좋은 재개 기록은 긴 대화의 복사본이 아니다. **현재 무엇이 사실이고, 다음에 무엇을 확인할지** 다른 세션이 판단할 수 있으면 된다.
+A useful resumption record is not a copy of a long conversation. It should let another session determine **what is true now and what to check next**.
 
-## 단계는 왜 나누나
+## Why divide work into phases?
 
-각 단계는 독립적으로 확인할 수 있는 결과를 만든다. 한 목표는 필요한 만큼, 최대 7개 단계로 나눈다. 작은 작업은 한 단계로 충분하다. 단계마다 별도 세션을 만들 필요도 없다.
+Each phase produces an outcome that can be checked independently. Use as many phases as needed, up to seven per goal. One phase is enough for a small task. A separate session for every phase is not required.
 
-아래는 설명을 위한 **가상 예시**다. 실제 수행 기록이나 테스트 결과가 아니다.
+The following is a **fictional example** for explanation, not a record of actual work or test results.
 
-## 짧은 단계 문서 예시
+## Example of a short phase record
 
-```md title="phase-02.md · 가상 예시"
-# 02. 잘못된 설정 저장 막기
+```md title="phase-02.md · fictional example"
+# 02. Prevent invalid settings from being saved
 
-목적: 유효하지 않은 설정으로 기존 값이 덮어써지는 일을 막는다.
-완료 기준:
-- 빈 필수 값은 저장하지 않고 이유를 표시한다.
-- 올바른 값은 저장하고 다시 읽을 수 있다.
-- 기존 설정을 읽는 동작은 유지한다.
+Purpose: Prevent invalid settings from overwriting existing values.
+Completion criteria:
+- Empty required values are rejected with an explanation.
+- Valid values can be saved and loaded again.
+- Existing settings can still be read.
 
-증거:
-- 검사 대상: 코드 버전 R2 + 작업 트리 내용 지문
-- RED: 빈 이름이 저장되어 기대한 검사가 실패함
-- GREEN: 입력 검증 뒤 같은 검사가 통과함
-- 회귀: R2의 기존 설정 읽기 검사 통과
-- 미실행: 키보드로 오류 위치에 이동하는 동작
+Evidence:
+- Checked input: code version R2 + fingerprint of working-tree contents
+- RED: The check failed as expected because an empty name was saved.
+- GREEN: The same check passed after input validation was added.
+- Regression: The existing-settings read check passed on R2.
+- Not run: Keyboard navigation to the error location.
 
-결정과 이유:
-- 저장 전에 검증한다. 기존 값을 보존하기 위해서다.
+Decision and reason:
+- Validate before saving to preserve existing values.
 
-남은 일: 키보드 동작 확인, 최종 코드 기준 재검증.
-다음 행동: 오류 메시지에 초점이 이동하는지 확인.
-소비 예산: 시도 2/3회, 경과 18/30분.
+Remaining work: Check keyboard behavior; verify the final code again.
+Next action: Check whether focus moves to the error message.
+Budget used: 2/3 attempts, 18/30 minutes elapsed.
 ```
 
-시도 횟수와 시간은 예시다. 실제 한도와 시간 계산 방식은 작업을 시작할 때 정하고, 새 세션에서도 같은 정의로 이어가야 한다.
+The attempts and times are examples. Define actual limits and how time is counted at the start, then preserve those definitions across sessions.
 
-## 맥락이 끊겨도 남겨야 할 것
+## What must survive a loss of context?
 
-| 기록 | 재개할 때 필요한 이유 |
+| Record | Why it matters when resuming |
 | --- | --- |
-| 목표와 완료 기준 | 무엇이 끝나야 하는지 판단 |
-| 현재 단계와 남은 일 | 끝난 일을 반복하거나 미완료를 놓치지 않기 |
-| 선택과 이유 | 제약을 모른 채 이전 결정을 되돌리지 않기 |
-| 검사 결과와 대상 코드 | 현재 코드에도 유효한 증거인지 확인 |
-| 실패·시도·소비 예산 | 세션 변경으로 한도가 초기화되지 않기 |
-| 짧은 요약과 다음 행동 | 조사만 반복하지 않고 이어가기 |
+| Goal and completion criteria | Determine what must be finished |
+| Current phase and remaining work | Avoid repeating finished work or overlooking unfinished work |
+| Choices and reasons | Avoid reversing decisions without understanding their constraints |
+| Check results and the code checked | Establish whether the evidence still applies |
+| Failures, attempts, and budget consumed | Prevent a session change from resetting limits |
+| Short summary and next action | Continue instead of repeating the investigation |
 
-## 재개는 실제 상태 확인부터
+## Resume by checking the actual state
 
-1. 목표와 현재 단계 문서를 읽는다.
-2. 현재 코드와 변경 사항을 확인한다. 커밋이 같아도 작업 트리가 다를 수 있다.
-3. 기록된 검사 대상과 현재 코드가 같은지 대조한다.
-4. 기존 시도·시간 예산을 복원하고, 남은 범위에서 다음 행동을 수행한다.
+1. Read the goal and current phase record.
+2. Inspect the current code and changes. The same commit can have a different working tree.
+3. Compare the recorded check inputs with the current code.
+4. Restore the consumed attempt and time budgets, then take the next action within what remains.
 
-요약에 “완료”가 있어도 필수 검사가 빠졌거나 코드가 달라졌다면 재검증한다. 맥락 압축과 새 에이전트 투입은 작업의 새 시작이 아니다.
+Even if the summary says “complete,” reverify when required checks are missing or the code differs. Context compaction and a new agent do not begin the task anew.
 
-## 결정이 필요한 지점
+## Where a decision is needed
 
-작고 되돌릴 수 있는 모호함은 가정과 이유를 남기고 진행한다. 데이터 삭제처럼 권한을 넘는 중요한 결정은 선택지와 영향을 정리해 사용자에게 묻는다. 그 답에 의존하지 않는 일은 계속할 수 있다.
+For small, reversible ambiguities, record the assumption and reason, then proceed. For consequential decisions beyond authority, such as deleting data, explain the options and effects and ask the user. Work independent of that answer can continue.
 
-## 이어서 논의할 항목
+## Topics for further discussion
 
-목표 요약과 단계별 기록에 무엇을 나눠 담을지, 재개할 때 기록과 실제 상태를 어떻게 대조할지 구체화할 예정이다. 세션을 마친 상태와 목표를 달성한 상태도 구별해 다룬다. 위 예시는 기존 설명용이며 고정 양식이나 기본 예산을 뜻하지 않는다.
+We will clarify what belongs in the goal summary versus each phase record, and how to compare records with actual state when resuming. Ending a session and achieving a goal also need distinct treatment. The existing example is explanatory; it does not prescribe a fixed template or default budget.
 
-관련 문서: [자율성과 확인이 필요한 결정](../autonomy/) · [TDD와 완료 검증](../verification/)
+Related: [Autonomy and decisions to confirm](../autonomy/) · [TDD and completion checks](../verification/)

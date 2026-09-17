@@ -1,0 +1,8 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { languageHref } from '../data/languages';
+const t = Astro.locals.t;
+---
+<StarlightPage frontmatter={{title: t('workshop.notFoundTitle'), description:t('workshop.notFoundDescription'), head:[{tag:'meta',attrs:{name:'robots',content:'noindex'}}]}}>
+  <p>{t('workshop.notFoundText')} <a href={languageHref(Astro.currentLocale ?? 'en', '', import.meta.env.BASE_URL)}>{t('workshop.returnHome')}</a></p>
+</StarlightPage>

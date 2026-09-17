@@ -1,45 +1,45 @@
 ---
-title: 현재 선택과 재검토 기준
-description: 어떤 선택을 유지하고, 어떤 증거가 생기면 바꿀지 기록한다.
+title: Current choices and when to revisit them
+description: Record the choices to retain and the evidence that would justify changing them.
 ---
-이 문서는 현재 설계의 이유를 모은다. **문서 사이트는 구현되어 있고, 작업의 상태·검증·한도를 통제할 실행기는 제안 단계다.** 아래 선택은 더 나은 근거가 생기면 바꾼다.
+This document collects the reasons behind the current design. **The documentation site is implemented; the runner that would control workflow state, verification, and limits is still a proposal.** These choices may change when better evidence is available.
 
-## 목표와 근거를 중심에 둔다
+## Put goals and evidence first
 
-**선택:** 중요한 작업의 성공·실패 기준을 먼저 합의하고, 완료 판단에 검사 결과와 대상 코드를 연결한다.
+**Choice:** Agree on success and failure criteria for important work, and connect completion decisions to check results and the code checked.
 
-**이유:** AI의 설명과 실제 결과는 다를 수 있다. [AgentDeck 사례](../../experiments/agentdeck/)에서도 세션 종료 확인과 목표 달성 확인의 범위를 구별할 필요가 있었다.
+**Reason:** AI explanations can differ from actual results. The [AgentDeck case study](../../experiments/agentdeck/) also showed the need to distinguish checks for ending a session from checks for achieving a goal.
 
-**재검토:** 검사를 통과해도 요구 동작을 놓치는 사례가 생기면 기준과 테스트를 보완한다. 검사 수만 늘리지 않는다.
+**Revisit when:** If checks pass while required behavior is missed, improve the criteria and tests instead of merely adding more checks.
 
-## 절차와 분업은 작업에 맞춘다
+## Adapt process and delegation to the task
 
-**선택:** 한 목표를 필요한 만큼 1–7개 단계로 나눈다. 메인 세션이 에이전트 수와 직렬·병렬 실행을 고른다.
+**Choice:** Divide a goal into 1–7 phases as needed. The main session chooses the number of agents and sequential or parallel execution.
 
-**이유:** 고정 팀이나 단계별 세션 초기화가 모든 작업에서 이롭다는 비교 근거는 없다. 중요한 이유와 제약, [재개 기록](../../workflow/phase-and-resume/)을 유지하는 것이 우선이다.
+**Reason:** No comparative evidence establishes that a fixed team or a session reset for each phase helps every task. Preserve important reasons, constraints, and [resumption records](../../workflow/phase-and-resume/) first.
 
-**재검토:** 같은 시작 상태·모델·완료 기준에서 절차 하나를 바꿔 정확성과 총비용을 비교한다. 아직 이 비교를 수행하지 않았다.
+**Revisit when:** Change one process element while holding starting state, model, and completion criteria constant, then compare correctness and total cost. This comparison has not yet been performed.
 
-## 완료 통제는 실행기의 책임으로 제안한다
+## Propose that the runner control completion
 
-**선택:** 상태 전환, 필수 검사, 코드 변경 뒤 검증 무효화, 재시도·시간 한도를 정해진 규칙으로 처리한다.
+**Choice:** Handle state transitions, required checks, invalidation of verification after code changes, and attempt and time limits with defined rules.
 
-**이유:** 한 분기의 빠른 반환 때문에 한도 검사를 지나친 사례가 있었다. AI의 “완료”를 검증 요청으로 취급하고 모든 경로에서 조건을 확인해야 한다.
+**Reason:** An early return in one branch bypassed a limit check. Treat AI’s “done” as a verification request and check the conditions on every path.
 
-**남은 일:** 실제 실행기 구현, 실패 분기와 재개 시나리오 검증. [TDD와 완료 검증](../../workflow/verification/)은 그 설계를 설명한다.
+**Remaining work:** Implement the runner and verify failure branches and resumption scenarios. [TDD and completion checks](../../workflow/verification/) explains the design.
 
-## 문서는 코드와 함께 관리한다
+## Manage documentation alongside code
 
-**선택:** Astro의 맞춤 홈과 Starlight의 Markdown 문서를 함께 사용한다. 배포 대상으로 GitHub Pages를 선택했다.
+**Choice:** Combine a custom Astro homepage with Starlight Markdown documentation, hosted on GitHub Pages.
 
-**이유:** 변경 내용을 Git에서 비교하고, 검증을 통과한 정적 결과를 게시할 수 있다. 서버·계정·데이터베이스 없이 현재 문서 범위를 운영하기에 맞는다.
+**Reason:** Git makes changes reviewable, and static output can be published after validation. The current documentation scope does not require a server, accounts, or a database.
 
-**제약:** 검색은 production build로 만든 색인이 필요하다. GitHub Pages의 저장소 하위 경로에서 링크·자산·검색이 함께 동작해야 한다. 배포 설정과 운영 상태는 저장소의 배포 가이드에 기록한다.
+**Constraint:** Search needs an index from a production build. Links, assets, and search must work under GitHub Pages’ repository subpath. Deployment configuration and operating status are recorded in the repository’s deployment guide.
 
-## 이어서 논의할 항목
+## Topics for further discussion
 
-이전 설계와 현재 방향에서 달라진 선택·이유·미확인 가정을 차례로 정리한다. 완료에 필수 검사 통과를 요구한다는 원칙은 유지한다. 실행기가 RED → GREEN 순서까지 강제할지는 이후 논의한다.
+We will document changed choices, reasons, and unverified assumptions between the earlier design and the current direction. Passing required checks remains a condition of completion. Whether the runner should also enforce the RED → GREEN sequence is still to be discussed.
 
-## 변경 기록을 남기는 기준
+## When to record a change
 
-새로운 실험이나 설계 수정이 생기면 해당 문서에서 **바뀐 선택, 이유, 근거, 남은 한계**를 갱신한다. 이전 관찰은 당시 조건과 날짜를 보존하고, 현재 상태로 오해할 표현을 고친다. 단순 문장 수정까지 별도 결정 기록으로 늘리지는 않는다.
+For a new experiment or design revision, update the relevant document with **the changed choice, reason, evidence, and remaining limits**. Preserve the conditions and dates of earlier observations, and correct wording that could be mistaken for current state. Simple wording edits do not need a separate decision record.

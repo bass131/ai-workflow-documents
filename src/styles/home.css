@@ -724,3 +724,13 @@ main,
   .intro-title .workshop-mascot { width: clamp(52px, 16vw, 86px); flex-basis: clamp(52px, 16vw, 86px); }
   .home .intro-title h1 { font-size: clamp(1.26rem, 5.8vw, 2.4rem); line-height: 1.5; letter-spacing: -.06em; }
 }
+
+.home-header .language-control { margin-inline-start: auto; }
+.home-header .theme-control { margin-inline-start: 0; }
+@media (max-width: 89.99rem) { .home-header .section-nav { display: none; } }
+html[lang='en'] .home h1, html[lang='en'] .home h2 { letter-spacing: -.035em; }
+html[lang='en'] .home .intro-title h1 { font-size: clamp(1.65rem, 2.6vw, 2.5rem); }
+@media (max-width:700px) { html[lang='en'] .home .intro-title h1 { font-size: clamp(1.15rem, 5vw, 2rem); } }
+@media (max-width: 23.99rem) { .home-header .workshop-brand img { display: none; } .home-header .workshop-brand { font-size: .85rem; } }
+
+.home-header .theme-control select { height: 44px; }

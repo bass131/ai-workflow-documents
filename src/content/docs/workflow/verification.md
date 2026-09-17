@@ -1,54 +1,54 @@
 ---
-title: TDD와 완료 검증
-description: 의미 있는 실패 테스트와 최종 코드의 검사 결과로 완료 여부를 판단한다.
+title: TDD and completion checks
+description: Judge completion using meaningful failing tests and check results from the final code.
 ---
-테스트는 회귀 위험을 줄이는 근거다. 모든 결함이 없음을 증명하지는 않는다.
+Tests provide evidence that reduces regression risk. They do not prove the absence of every defect.
 
-## 동작을 바꿀 때의 순서
+## Sequence for behavior changes
 
-| 단계 | 확인할 것 | 피할 것 |
+| Step | Check | Avoid |
 | --- | --- | --- |
-| RED · 실패 확인 | 기대하는 동작이 없어 검사가 실패하는가 | 설치 오류나 문법 오류를 요구 동작의 실패로 세기 |
-| GREEN · 구현 | 해당 실패를 해결하는 구현이 통과하는가 | 검사를 지우거나 기대값을 편하게 바꾸기 |
-| 정리 · 필요할 때 | 구조를 바꿔도 동작이 유지되는가 | 목적 없는 재작성 |
-| 회귀 확인 | 최종 코드에서 관련 기존 동작도 유지되는가 | 수정 전 결과로 완료 선언하기 |
+| RED · confirm failure | Does the check fail because the expected behavior is absent? | Counting installation or syntax errors as a failure of the required behavior |
+| GREEN · implement | Does the implementation resolve that failure and pass? | Deleting checks or changing expectations for convenience |
+| Refactor · when needed | Is behavior preserved after structural changes? | Rewriting without a purpose |
+| Check regressions | Does the final code preserve related existing behavior? | Declaring completion using results from before the edit |
 
-사용자와 합의한 관찰 가능한 기준에서 AI가 예시와 검사를 만든다. 테스트를 통과하기 쉬운 내부 구현만 검사하면 기준을 만족했는지 알 수 없다.
+AI develops examples and checks from observable criteria agreed with the user. Tests limited to convenient internal implementation details do not establish whether those criteria are met.
 
-:::tip[문서만 바뀌는 경우]
-주석·설명만 수정했다면 인위적인 RED는 필요 없다. 설명의 사실, 링크, 빌드나 렌더 결과 등 바뀐 내용에 맞는 검사를 한다.
+:::tip[Documentation-only changes]
+Changes limited to comments or explanations do not need an artificial RED. Check what changed: factual accuracy, links, builds, or rendered output.
 :::
 
-## “완료”와 검증 요청을 나눈다
+## Separate “complete” from a verification request
 
-다음은 **아직 구현하지 않은 실행기 설계**다. AI가 완료를 보고하면 실행기가 검증을 요청받은 상태로 전환한다.
+The following is a **runner design that has not been implemented**. When AI reports completion, the runner would move into a verification-requested state.
 
-```text title="제안한 완료 판정"
-구현 → 검증 요청 → 필수 검사와 대상 코드 확인
-                      ├─ 실패 또는 미실행 → 완료 불가
-                      ├─ 검사 뒤 코드 변경 → 재검증
-                      └─ 현재 코드의 모든 필수 검사 통과
-                           + 완료 기준 충족 → 완료
+```text title="Proposed completion decision"
+Implementation → verification request → inspect required checks and code
+                                         ├─ Failed or unrun → cannot complete
+                                         ├─ Code changed after checks → reverify
+                                         └─ All required checks pass on current code
+                                              + criteria met → complete
 ```
 
-테스트와 연결할 코드 식별자는 커밋만으로 부족할 수 있다. 커밋되지 않은 파일·설정도 결과에 영향을 주기 때문이다. 실행기는 검사 입력과 실제 작업 트리를 함께 식별해야 한다.
+A commit alone may not identify the code tested: uncommitted files and configuration can affect results. The runner needs to identify both the check inputs and the actual working tree.
 
-## 실행기가 맡을 책임
+## Responsibilities proposed for the runner
 
-**실행기**는 정해진 규칙대로 상태를 바꾸는 프로그램을 뜻한다. AI가 문장을 그럴듯하게 썼는지와 별개로 다음 항목을 통제하도록 제안한다.
+A **runner** is a program that changes state according to defined rules. It is proposed to control the following independently of how convincing an AI report sounds:
 
-- 허용된 상태 전환과 완료 조건
-- 검사 명령, 종료 코드, 결과물, 검사한 코드 버전의 연결
-- 코드 변경 뒤 오래된 검증의 무효화
-- 실패·미실행 필수 검사에 대한 완료 거부
-- 재시도와 시간 한도, 재개 후 소비 예산 보존
+- Allowed state transitions and completion conditions
+- The connection between check commands, exit codes, artifacts, and the code version checked
+- Invalidation of old verification after code changes
+- Rejection of completion when required checks fail or have not run
+- Attempt and time limits, preserving consumed budgets when resuming
 
-완료 조건을 프로그램으로 검사해도, 요구사항 자체가 잘못되었거나 테스트가 중요한 동작을 빠뜨린 문제까지 해결되지는 않는다.
+Programmatic completion checks do not resolve incorrect requirements or tests that omit important behavior.
 
-## 실패와 한도 소진
+## Failures and exhausted budgets
 
-실패하면 원인을 분류하고 남은 예산 안에서 수정한다. 한도를 소진하면 시도를 계속 늘리지 않고 실패 근거, 시도한 내용, 남은 작업과 필요한 결정을 남긴다. 새 세션으로 넘어가도 횟수를 초기화하지 않는다.
+Classify the cause and fix failures within the remaining budget. When the limit is reached, stop adding attempts and record the evidence, what was tried, remaining work, and decisions needed. A new session does not reset the count.
 
-중요한 권한 밖 결정은 사용자에게 넘긴다. 모든 실패를 즉시 사람에게 보내거나, 반대로 모든 실패를 끝없이 재시도하는 규칙은 두지 않는다.
+Escalate consequential decisions beyond delegated authority to the user. This does not prescribe immediately escalating every failure or retrying every failure indefinitely.
 
-관련 문서: [단계 기록과 재개](../phase-and-resume/) · [AgentDeck 실험](../../experiments/agentdeck/)
+Related: [Phase records and resuming work](../phase-and-resume/) · [AgentDeck experiment](../../experiments/agentdeck/)

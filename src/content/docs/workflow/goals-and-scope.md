@@ -1,17 +1,17 @@
 ---
-title: 목표와 성공 기준
-description: 무엇을 이루고 어디까지 다룰지 함께 정하기 위한 장의 개요.
+title: Goals and success criteria
+description: An outline for agreeing on the intended outcome and the scope of the work.
 ---
-이 장은 **기대하는 결과와 작업 범위**를 맞추는 출발점이다. 지금은 큰 틀을 정리하며, 구체적인 예시와 규칙은 대화하면서 채운다.
+This chapter is a starting point for aligning on **expected outcomes and scope**. It currently sets out the broad ideas; concrete examples and rules will be developed through discussion.
 
-## 이 장에서 다룰 것
+## What this chapter will cover
 
-목표를 관찰할 수 있는 결과로 표현하고, 포함할 일과 제외할 일을 구분한다. 중요한 성공·실패 기준은 사용자와 함께 맞추고, 테스트 코드 작성과 구현은 에이전트가 맡는다.
+Express goals as observable outcomes and distinguish included work from excluded work. Agree with the user on important success and failure criteria; agents write the tests and implementation.
 
-## 함께 정할 항목
+## Topics to decide together
 
-- 목표와 성공·실패 기준을 어느 수준으로 기록할지
-- 이 원칙을 적용할 구체적인 사례와 예외
-- 진행 중 기준이나 범위가 바뀔 때 무엇을 남길지
+- How much detail to record for goals and success or failure criteria
+- Concrete cases and exceptions for applying this principle
+- What to record when criteria or scope change during the work
 
-관련 문서: [전체 흐름](../overview/) · [자율성과 확인이 필요한 결정](../autonomy/)
+Related: [Workflow overview](../overview/) · [Autonomy and decisions to confirm](../autonomy/)

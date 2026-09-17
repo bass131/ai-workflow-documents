@@ -1,0 +1,6 @@
+---
+import NotFound from '../../components/NotFound.astro';
+import { languages } from '../../data/languages';
+export function getStaticPaths() { return languages.filter(item => item.path).map(item => ({params:{locale:item.path}})); }
+---
+<NotFound />

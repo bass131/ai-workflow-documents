@@ -1,6 +1,13 @@
 ---
 import Head from '@astrojs/starlight/components/Head.astro';
 import MaterialStyles from './MaterialStyles.astro';
+import LanguagePreference from './LanguagePreference.astro';
+import { languages, language, languageHref } from '../data/languages';
+const notFound = /\/404(?:\.html|\/)?$/.test(Astro.url.pathname);
+const current = language(Astro.currentLocale);
+const errorUrl = (code: string) => new URL(languageHref(code, language(code).path ? '404/' : '404.html', import.meta.env.BASE_URL), Astro.site ?? Astro.url);
+const head = Astro.locals.starlightRoute.head.filter(item => item.tag !== 'link' || !['canonical','alternate'].includes(String(item.attrs?.rel)));
 ---
-<Head {...Astro.props} />
+{notFound ? <>{head.map(({tag: Tag, attrs, content}) => <Tag {...attrs} set:html={content} />)}{Astro.site && <><link rel="canonical" href={errorUrl(current.code)} />{languages.map(item => <link rel="alternate" hreflang={item.code} href={errorUrl(item.code)} />)}<link rel="alternate" hreflang="x-default" href={errorUrl('en')} /></>}</> : <Head {...Astro.props} />}
 <MaterialStyles />
+<LanguagePreference notFound={notFound} />

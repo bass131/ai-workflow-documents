@@ -1,44 +1,44 @@
 ---
-title: 전체 흐름
-description: 목표를 합의하고, 필요한 만큼 나누고, 최종 코드의 근거로 완료를 판단한다.
+title: Workflow overview
+description: Agree on the goal, split work only as needed, and judge completion using evidence from the final code.
 ---
-중요한 작업은 **관찰할 수 있는 성공·실패 기준**에서 시작한다. AI가 구현 방법을 선택하되, 완료 여부는 남겨진 증거와 대조한다.
+Important work starts with **observable criteria for success and failure**. AI chooses how to implement the work, while the evidence determines whether it is complete.
 
-## 01 · 목표를 합의한다
+## 01 · Agree on the goal
 
-“설정을 개선한다”보다 “잘못된 설정은 저장되지 않고, 기존 설정은 그대로 읽힌다”가 판단하기 쉽다. 사용자는 중요한 결과와 권한 범위를 정하고, 메인 에이전트가 예시·테스트를 구체화한다. 작은 수정마다 승인을 반복할 필요는 없다.
+“Invalid settings cannot be saved, and existing settings still load” is easier to judge than “improve settings.” The user defines important outcomes and the scope of authority; the main agent develops concrete examples and tests. Every small edit does not need another approval.
 
-## 02 · 필요한 만큼 나눈다
+## 02 · Split only as needed
 
-한 목표는 **1–7개 단계**로 나눈다. 7개는 상한이며 채워야 할 수가 아니다. 각 단계에는 목적, 완료 기준, 증거, 결정과 이유, 남은 일, 다음 행동을 짧게 남긴다.
+Split a goal into **1–7 phases**. Seven is an upper limit, not a target. Briefly record each phase’s purpose, completion criteria, evidence, decisions and reasons, remaining work, and next action.
 
-서브에이전트 수와 직렬·병렬 실행은 메인 세션이 작업의 의존성에 맞춰 선택한다. 고정 팀, 단계마다 새 세션, 모델별 고정 역할을 전제로 하지 않는다.
+The main session chooses the number of subagents and sequential or parallel execution according to dependencies. This does not assume a fixed team, a new session for every phase, or fixed roles for particular models.
 
-## 03 · 동작을 바꾸고 확인한다
+## 03 · Change behavior and check it
 
-동작이 바뀌면 기대한 이유로 실패하는 테스트(RED), 통과시키는 구현(GREEN), 필요한 정리 순서로 진행한다. 최종 코드에 관련 회귀 검사를 적용한다. 문서·주석만 바꾸는 작업에는 인위적인 실패 테스트를 만들지 않는다.
+For behavior changes, begin with a test that fails for the expected reason (RED), implement the behavior that passes it (GREEN), then refactor as needed. Run relevant regression checks on the final code. Do not invent a failing test for changes limited to documentation or comments.
 
-## 04 · 근거로 완료를 판단한다
+## 04 · Judge completion from evidence
 
-AI의 “완료”는 검증 요청이다. **제안 중인 실행기**는 상태 전환, 검사 결과와 코드 버전의 연결, 완료 자격, 재시도·시간 한도를 맡는다. 필수 검사가 실패했거나 실행되지 않았다면 완료할 수 없다. 검증 뒤 코드가 바뀌면 이전 결과는 완료 근거로 쓰지 않는다.
+An AI report of “done” is a request for verification. The **proposed runner** would control state transitions, connect results to the code version checked, determine eligibility for completion, and enforce attempt and time limits. Work cannot be complete while required checks fail or remain unrun. If code changes after verification, earlier results cannot establish completion.
 
-## 애매하면 어떻게 하나
+## What if something is ambiguous?
 
-작고 되돌릴 수 있는 선택은 합리적으로 가정하고 이유를 기록한다. 위임된 권한을 넘는 중요한 결정은 사용자에게 묻되, 그 답에 의존하는 작업만 멈춘다.
+For small, reversible choices, make a reasonable assumption and record why. Ask the user about consequential decisions beyond delegated authority, pausing only work that depends on the answer.
 
-## 모델이 좋아지면 절차도 다시 본다
+## Revisit the process as models improve
 
-단계나 에이전트 수가 늘었다고 품질이 좋아졌다고 볼 수 없다. 기존 절차와 더 가벼운 방식을 같은 완료 기준으로 비교하고, 실제 도움이 된 제약만 유지한다.
+More phases or agents do not establish better quality. Compare the existing process with a lighter approach using the same completion criteria, and retain constraints that actually help.
 
-## 앞으로 채워 갈 장
+## Chapters to develop next
 
-기존 흐름을 바탕으로 아래 순서대로 구체화한다. 새 장은 핵심 취지와 논의할 항목만 정리해 두었다.
+The following reading order builds on this workflow. The new chapters currently contain their purpose and topics for discussion.
 
-1. [목표와 성공 기준](../goals-and-scope/): 기대하는 결과와 범위
-2. [자율성과 확인이 필요한 결정](../autonomy/): 맡길 선택과 확인할 결정
-3. [단계 기록과 재개](../phase-and-resume/): 작업을 이어가기 위한 기록
-4. [TDD와 완료 검증](../verification/): 검사와 완료 판단
+1. [Goals and success criteria](../goals-and-scope/): expected outcomes and scope
+2. [Autonomy and decisions to confirm](../autonomy/): delegated choices and decisions needing input
+3. [Phase records and resuming work](../phase-and-resume/): enough context to continue
+4. [TDD and completion checks](../verification/): checks and completion decisions
 
-:::note[설계와 구현의 경계]
-이 사이트는 워크플로를 설명하는 프로토타입이다. 상태를 통제하는 실제 실행기는 아직 구현하지 않았다.
+:::note[Design and implementation]
+This site is a prototype explaining the workflow. The runner that would control its state has not yet been implemented.
 :::

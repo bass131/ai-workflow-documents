@@ -1,0 +1,37 @@
+{
+  "title": "Moodie’s Agentic Workflow — Development with reasons and evidence",
+  "description": "Designs, experiments, and limits of a goal-driven AI development workflow.",
+  "edition": "Design · Experiment · Record",
+  "heading": ["How we work with AI", "changes with evidence."],
+  "lead": "Development notes on agreeing on goals, recording reasons, and checking completion against the final code.",
+  "readOverview": "Read the overview",
+  "explore": "Explore the scenarios",
+  "note": "Use only the process you need. Revisit it as models change.",
+  "flowTitle": "From goal to completion",
+  "flowLabel": "Design overview",
+  "steps": [["01", "Goal", "Agree on observable success and failure"], ["02", "Phases", "Use 1–7 phases as needed and record why"], ["03", "TDD", "Confirm failure → implement → refactor as needed"], ["04", "Verify", "Check the final code against the evidence"]],
+  "flowReturn": "Recheck if the code changes after verification",
+  "simulationTitle": "When to proceed, when to pause",
+  "simulationLabel": "Scenario explorer",
+  "simulationIntro": "Select a situation to explore the proposed workflow’s reasoning. This does not run agents or tests.",
+  "scenarioGroup": "Choose a situation",
+  "scenarioLabels": ["Small ambiguity", "Important decision", "Failed check", "Resume work"],
+  "next": "Next action",
+  "noscript": "Other situations: an important decision pauses only the work that depends on it. Failed required checks prevent completion. When resuming, check the actual code and the remaining attempts.",
+  "readingTitle": "Read the design and the experiments",
+  "openDocs": "Open the docs",
+  "cards": [
+    {"tag":"DESIGN", "title":"Workflow overview", "description":"Connect goals, phases, tests, and completion in one loop.", "path":"workflow/overview/"},
+    {"tag":"DECISIONS", "title":"Design choices and changes", "description":"Why we made today’s choices, and what evidence would change them.", "path":"design/decisions/"},
+    {"tag":"CASE STUDY", "title":"Lessons from AgentDeck", "description":"Control-flow limits observed in an experiment, and the next proposed design.", "path":"experiments/agentdeck/"}
+  ],
+  "scopeLabel": "Current scope",
+  "scope": "This is a documentation site for reading the design and its evidence. The runner that would control state transitions and completion is still a proposal.",
+  "footer": "Notes on design and experiments",
+  "scenarios": {
+    "minor": {"status":"Record the assumption and proceed", "title":"An internal function still needs a name", "reason":"This choice is easy to reverse and does not affect external behavior. Pick a name that follows existing conventions and briefly record why.", "next":"Continue implementation and checks. Do not ask for approval for every small choice."},
+    "decision": {"status":"Pause only the dependent work", "title":"Existing user data would need to be deleted", "reason":"Recovery is costly, and the decision exceeds the delegated implementation scope. Explain what would be deleted and the alternatives, then ask the user.", "next":"Pause work that depends on deletion. Unrelated research and safe checks can continue."},
+    "failure": {"status":"Cannot complete · investigate the cause", "title":"A required regression check has failed", "reason":"An implementation report alone does not establish completion. Find the cause and fix it within the remaining attempt and time limits.", "next":"Verify the final code again. If the budget is exhausted, record the evidence and remaining work, then request the user’s decision."},
+    "resume": {"status":"Compare the record with the actual state", "title":"A new session takes over the work", "reason":"Read the goal and phase records, then inspect the current code, the version that was checked, and any changes. Do not accept a summary’s completion claim without checking.", "next":"Carry forward the attempts and time already used. If the code changed after verification, recheck it before continuing."}
+  }
+}

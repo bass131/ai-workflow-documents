@@ -1,0 +1,16 @@
+{
+  "workshop.documentList": "Documents",
+  "workshop.openDocuments": "Open documents",
+  "workshop.closeDocuments": "Close documents",
+  "workshop.home": "Home",
+  "workshop.mainMenu": "Main navigation",
+  "workshop.guide": "Guides",
+  "workshop.cases": "Case studies",
+  "workshop.design": "Design choices",
+  "workshop.notFoundTitle": "Page not found",
+  "workshop.notFoundDescription": "Check the address or choose a page from the document list.",
+  "workshop.notFoundText": "This page has moved or does not exist. Open the document list or",
+  "workshop.returnHome": "return home.",
+  "sidebarNav.accessibleLabel": "Documents",
+  "tableOfContents.onThisPage": "On this page"
+}

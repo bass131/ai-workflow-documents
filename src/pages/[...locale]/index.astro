@@ -1,0 +1,6 @@
+---
+import WorkshopHome from '../../components/WorkshopHome.astro';
+import { languages } from '../../data/languages';
+export function getStaticPaths() { return languages.map(item => ({params:{locale:item.path || undefined}})); }
+---
+<WorkshopHome />

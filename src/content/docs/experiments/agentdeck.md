@@ -1,57 +1,57 @@
 ---
-title: AgentDeck에서 배운 것
-description: 종료 검사 실험으로 드러난 제어 흐름의 한계와 다음 실행기 설계.
+title: Lessons from AgentDeck
+description: Control-flow limits revealed by a stop-check experiment and a proposal for the next runner.
 ---
-**기존 설계·실행 기록과 분리된 훅 실험을 읽고, 보장할 수 있는 범위를 좁혀 적은 사례.** 2026년 9월 17일 평가를 바탕으로 한다.
+**A case study that reads earlier design and execution records alongside an isolated hook experiment, and narrows the claims to what the evidence supports.** Based on an evaluation dated September 17, 2026.
 
-:::note[근거의 범위]
-여기서 훅은 작업 시작·종료 시 실행되는 검사 스크립트다. 이번 사이트 제작 중 저장소를 다시 감사하거나 실험을 재실행하지 않았다.
+:::note[Scope of the evidence]
+Here, a hook is a check script run when work starts or stops. The repository was not audited again and the experiment was not rerun while building this site.
 :::
 
-## 문제 · 절차가 결과를 보장하는가
+## Problem · Does a process guarantee an outcome?
 
-AgentDeck의 목표·단계·재개 기록은 작업을 이어갈 근거를 제공했다. 다만 검사 문구와 실제 제어 흐름을 대조해야 했다. “종료를 막는다”와 “반복을 제한한다”, “세션을 마친다”와 “목표를 달성했다”는 각각 다른 조건이다.
+AgentDeck’s goal, phase, and resumption records provided context for continuing work. But the wording of checks needed comparison with actual control flow. “Prevent stopping” differs from “limit repetition,” just as “end a session” differs from “achieve a goal.”
 
-## 확인 · 특정 분기에서 한도가 적용되지 않았다
+## Observation · A branch did not apply the limit
 
-이전 평가에서 합성 입력으로 종료 훅을 반복 호출했다.
+The earlier evaluation repeatedly invoked the stop hook with synthetic inputs.
 
-| 조건 | 관찰 |
+| Condition | Observation |
 | --- | --- |
-| 필수 요약 항목은 있고 시각만 오래됨 | 세 번 차단 뒤 네 번째 호출에서 에스컬레이션 처리 |
-| 필수 요약 항목이 빠짐 | 다섯 번 모두 차단되고 누적 5회에도 활성 상태 유지 |
+| Required summary fields present, but timestamp stale | Blocked three times, then escalated on the fourth call |
+| Required summary fields missing | Blocked all five times and remained active at a cumulative count of five |
 
-필수 항목 누락 분기에서 카운터를 올린 뒤 바로 반환하여, 그 아래에 있는 반복 한도 검사에 도달하지 않았다. 검사 순서가 중요한 이유다.
+The missing-fields branch incremented the counter and returned immediately, never reaching the repetition-limit check below it. This shows why check order matters.
 
-**확인한 것은 한도 미적용 경로다. 실제 모델이 자율적으로 무한 반복했다는 증거는 아니다.** 전체 에이전트 실행이나 모델 비교 실험도 아니었다.
+**The observation establishes a path where the limit was not applied. It does not show a real model autonomously looping forever.** This was neither a full agent run nor a comparison of models.
 
-[측정 발췌 JSON 보기](../../evidence/agentdeck-stop-gate-excerpt.json)
+[View the measurement excerpt (JSON)](../../evidence/agentdeck-stop-gate-excerpt.json)
 
-## 설계 선택 · 완료 판정을 코드와 연결한다
+## Design choice · Connect completion to the code
 
-다음 실행기는 AI의 자기 보고와 별개로 상태 전환과 완료 자격을 관리하도록 제안한다. 모든 실패 분기에서 한도를 적용하고, 검사 결과를 검사한 코드 버전에 묶는다. 코드가 바뀌면 이전 검증은 현재 완료의 근거가 될 수 없다.
+The next runner is proposed to manage state transitions and eligibility for completion independently of AI self-reports. It would apply limits on every failure branch and tie results to the code version checked. After a code change, previous verification cannot establish that the current work is complete.
 
-이 아키텍처는 **제안**이다. 이 사이트에 실제 실행기를 구현했다는 뜻은 아니다.
+This architecture is a **proposal**. It does not mean that a working runner has been implemented on this site.
 
-## 유지할 것 · 줄여 볼 것
+## What to keep · What to reconsider
 
-| 유지할 근거 | 다시 검토할 절차 |
+| Evidence to retain | Process to revisit |
 | --- | --- |
-| 목표와 관찰 가능한 완료 기준 | 모든 작업에 같은 계획·검토·수정 분업 |
-| 실제 검사 결과와 대상 코드 | 단계마다 의무적으로 새 세션 만들기 |
-| 이유를 포함한 짧은 재개 기록 | 결정의 중요도 대신 결정 개수로 권한 판단 |
-| 실패·시간 한도 | 최신 모델에서도 효과를 재평가하지 않은 규칙 |
+| Goals and observable completion criteria | The same planning, review, and revision split for every task |
+| Actual check results and the code checked | A mandatory new session for every phase |
+| Short resumption records including reasons | Judging authority by the number of decisions rather than their significance |
+| Failure and time limits | Rules whose usefulness has not been reassessed with newer models |
 
-더 많은 단계나 에이전트가 더 낫다고 결론 내릴 비교 자료는 없다. 필요했던 설명과 제약은 남기고, 절차의 비용과 이득을 함께 확인해야 한다.
+There is no comparative evidence here that more phases or agents are better. Preserve useful explanations and constraints while examining both the costs and benefits of the process.
 
-## 다음 실험 · 하나씩 바꿔 비교한다
+## Next experiment · Change one factor at a time
 
-같은 시작 코드, 입력, 모델, 완료 기준으로 기존 방식과 축소한 방식을 비교한다. 새 세션 빈도 같은 요소 하나부터 바꾼다. 정확성, 회귀, 준비·감독·재개까지 포함한 총비용, 사용자 개입을 함께 기록한다.
+Compare the existing and reduced approaches using the same starting code, inputs, model, and completion criteria. Begin with one factor, such as how often a new session starts. Record correctness, regressions, total cost including setup, supervision and resumption, and user interventions.
 
-아직 이 비교를 수행하지 않았으므로 성능 우위를 주장하지 않는다.
+This comparison has not been performed, so no performance advantage is claimed.
 
-## 출처와 한계
+## Sources and limitations
 
-근거는 이전 평가의 `agentdeck-goal-loop-review.md`와 `agentdeck-loop-measurements.json`이다. 위 링크는 원본 측정 중 두 종료 검사 조건과 소스 지문만 추린 발췌본이며, 새 측정이나 전체 로그가 아니다. 로컬 경로와 무관한 실험 조건은 생략했다.
+The sources are the earlier evaluation’s `agentdeck-goal-loop-review.md` and `agentdeck-loop-measurements.json`. The linked excerpt includes only two stop-check conditions and source fingerprints from those measurements. It is not a new measurement or a full log. Local paths and unrelated experiment conditions have been omitted.
 
-관련 문서: [TDD와 완료 검증](../../workflow/verification/)
+Related: [TDD and completion checks](../../workflow/verification/)

@@ -1,4 +1,5 @@
 ---
+import WorkshopLanguageSelect from './WorkshopLanguageSelect.astro';
 import Search from '@astrojs/starlight/components/Search.astro';
 import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
 import WorkshopBrand from './WorkshopBrand.astro';
@@ -11,6 +12,7 @@ import DocumentToggle from './DocumentToggle.astro';
   <SectionNav />
   <div class="workshop-tools print:hidden">
     <Search />
-    <div class="header-theme" title="색상 테마: 밝게·어둡게·자동"><ThemeSelect /></div>
+    <WorkshopLanguageSelect notFound={/\/404(?:\.html|\/)?$/.test(Astro.url.pathname)} />
+    <div class="header-theme" title={Astro.locals.t('themeSelect.accessibleLabel')}><ThemeSelect /></div>
   </div>
 </div>

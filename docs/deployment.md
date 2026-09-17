@@ -17,6 +17,10 @@
 
 배포 파일은 [.github/workflows/site.yml](../.github/workflows/site.yml)입니다. 호스팅은 GitHub Pages를 사용합니다.
 
+## 언어 주소와 선호
+
+영어는 대표 홈과 기존 문서 경로, 한국어는 /ko/ 아래에 있습니다. 언어 선택은 같은 slug의 문서로 이동하며 같은 브라우저의 localStorage에 기억됩니다. 대표 홈 방문은 저장한 선택을 복원하고, 직접 문서 URL은 명시된 언어로 엽니다. JavaScript 또는 저장소를 사용할 수 없으면 대표 홈은 영어이며 직접 /ko/ 링크는 계속 사용할 수 있습니다. 404.html은 Pages 공통 오류 진입점이고 한국어 오류 안내는 /ko/404/입니다. 언어별 HTML·canonical·alternate와 검색 색인은 Pages base를 포함합니다.
+
 ## 주소와 출력
 
 로컬 `npm run build`는 base `/`로 `dist/`에 빌드합니다. `npm run build:pages`는 별도 `dist-pages/`를 사용합니다. 두 출력은 섞지 않습니다.
