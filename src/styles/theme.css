@@ -419,3 +419,50 @@ body.home, .workshop-page .main-frame {
   .workshop-header button[data-open-modal] { width: 44px; justify-content: center; padding: .5rem; }
   .workshop-header button[data-open-modal] > span, .workshop-header button[data-open-modal] kbd { display: none; }
 }
+
+/* Document diagrams remain readable without scripts and follow the reading-column width. */
+.sl-markdown-content .workflow-map {
+  container-type: inline-size;
+  margin: 1.5rem 0;
+  padding: clamp(.9rem, 3vw, 1.5rem);
+  border: 1px solid var(--wf-rule);
+  border-radius: 6px;
+  background: var(--wf-paper);
+  color: var(--wf-ink);
+}
+.workflow-map figcaption { margin: 0 0 1.5rem; line-height: 1.6; }
+.workflow-map figcaption strong { display: block; font-size: 1.05rem; }
+.workflow-map figcaption span { display: block; margin-top: .35rem; color: var(--wf-muted); font-size: .85rem; }
+.sl-markdown-content .workflow-map-steps,
+.sl-markdown-content .workflow-map-outcomes { display: grid; gap: 1.5rem; padding: 0; margin: 0; list-style: none; }
+.sl-markdown-content .workflow-map-steps > li {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--wf-rule);
+  border-radius: 4px;
+  background: var(--wf-soft);
+}
+.workflow-map-steps > li:not(:last-child)::after {
+  content: '↓';
+  position: absolute;
+  bottom: -1.55rem;
+  left: calc(50% - .5rem);
+  color: var(--wf-accent);
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+}
+.workflow-map .workflow-map-label { display: block; margin: 0 0 .6rem; color: var(--wf-muted); font-size: .75rem; font-weight: 600; }
+.workflow-map-steps strong { display: block; line-height: 1.5; }
+.sl-markdown-content .workflow-map-steps p { margin: .5rem 0 0; font-size: .88rem; line-height: 1.6; }
+.sl-markdown-content .workflow-map-outcomes { gap: .6rem; margin-top: 1rem; }
+.sl-markdown-content .workflow-map-outcomes > li { margin: 0; padding: .75rem 1rem; border-inline-start: 3px solid var(--wf-accent); background: var(--wf-soft); font-size: .88rem; line-height: 1.6; }
+.workflow-map-outcomes strong, .workflow-map-outcomes span { display: block; }
+.workflow-map-outcomes span { color: var(--wf-muted); }
+.sl-markdown-content .workflow-map-note { margin: 1rem 0 0; font-size: .85rem; line-height: 1.7; color: var(--wf-muted); }
+@container (min-width: 36rem) {
+  .sl-markdown-content .workflow-map-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .workflow-map-steps > li:not(:last-child)::after { content: '→'; left: auto; right: -1.35rem; bottom: calc(50% - .75rem); }
+  .sl-markdown-content .workflow-map-outcomes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
