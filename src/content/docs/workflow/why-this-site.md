@@ -3,9 +3,9 @@ title: Why this site exists
 description: Reducing the effort of managing growing code and documentation, while combining agent autonomy with checks enforced by software.
 ---
 
-As my projects grew, the code and documentation produced with AI became harder to manage. **Finding the right context, understanding a change, and deciding whether to trust its result** took more effort. That is where this site started.
+This wiki describes how to organize **goals, agent autonomy, verification, and resumption** in AI-assisted development. It connects concepts and practical guidance to case studies and the evidence behind design choices.
 
-It records what I try to reduce that burden and what I actually learn. The direction is to leave agents room to choose how they work, while software checks the conditions that must be met.
+The design leaves agents room to choose how they work, while software checks the conditions that must be met. The site is implemented; the workflow controller remains a proposal. Its value needs to be tested in actual tasks.
 
 ![A wooden robot organizing scattered notes and parts into document trays and reusable pieces on a workbench](../../../assets/workflow-workbench.png)
 
@@ -31,13 +31,17 @@ It records what I try to reduce that burden and what I actually learn. The direc
 
 ## What was getting difficult
 
-These are problems I encountered in my projects and the changes I want to explore. Their usefulness still needs to be checked in actual work.
+The following problems were reported in the projects behind this wiki and motivate the proposed design. The proposed changes still need evaluation in actual work.
 
-| Problem I encountered | Direction to explore |
+<div class="document-table document-table--comparison" role="region" aria-labelledby="what-was-getting-difficult" tabindex="0">
+
+| Reported project problem | Proposed response |
 | --- | --- |
-| Code bundled several responsibilities and did not reuse enough existing code. | Make existing functions and the right place to change easier to find; consider the next change. |
-| Current rules, old plans, and repeated explanations were mixed together. | Give each topic a place and distinguish past records from current guidance. |
-| I had to select the useful information and explain the context again. | Preserve decision reasons, current state, and verification evidence for the next person or agent. |
+| **Too many responsibilities in one place**<br>Code bundled several responsibilities and did not reuse enough existing code. | **Make change points and reusable code visible**<br>Make existing functions easier to find and consider the next change. |
+| **Current and past guidance mixed together**<br>Documents mixed current rules, old plans, and repeated explanations. | **Separate topics and distinguish past from current**<br>Give each topic a place and distinguish past records from current guidance. |
+| **Context repeatedly reconstructed**<br>The user had to select relevant information and explain it again. | **Leave evidence the next person or agent can use**<br>Preserve decision reasons, current state, and verification evidence. |
+
+</div>
 
 A feature could work yet be difficult to change later. An agent taking over could follow an outdated explanation or repeat finished work. Code reuse, maintainability, and organized documentation all matter here.
 
@@ -45,11 +49,15 @@ A feature could work yet be difficult to change later. An agent taking over coul
 
 **Hypothetical task: fix a language preference that is lost on a return visit.** This uses the site's language feature to explain the approach. It is not a claim that a runner has automated these steps.
 
+<div class="document-table document-table--steps" role="region" aria-labelledby="a-small-example" tabindex="0">
+
 | Step | What it means for this task |
 | --- | --- |
-| Agree on the criteria | Returning to the main homepage in the same browser should keep the chosen language. A directly opened document should keep the language in its address. |
-| AI does the work | Find and reuse the language, URL, and storage code; write tests for the expected behavior and implement the change. |
-| Software checks it | Check that required verification ran against the final code. Failed or missing required checks prevent completion. |
+| **01 · Agree on the criteria** | **Keep the chosen language.** This applies when returning to the main homepage in the same browser. A directly opened document should keep the language in its address. |
+| **02 · AI does the work** | **Reuse existing code, write tests, and implement the change.** Find the language, URL, and storage code and check the expected behavior. |
+| **03 · Software checks it** | **Check required verification against the final code.** Failed or missing required checks prevent completion. |
+
+</div>
 
 <details>
 <summary>What if the code changes after testing, or work is interrupted?</summary>
@@ -62,24 +70,24 @@ State storage and attempt limits belong to the [proposed completion checks](../v
 
 </details>
 
-## Why keep a site
+## How to use this wiki
 
-1. **To find the explanation that matters.** Organize work starts, important decisions, resumption, and verification by topic. Update shared explanations in one place and link to them.
-2. **To retain the reasons and evidence.** Record actual examples, design choices, test coverage, and limits. Distinguish proposals from observed results.
-3. **To show how the work changes.** Update the documents alongside the work and keep their history in Git. As a portfolio, the site should show both the problem and the approach.
+1. **Guides explain how to apply the workflow.** Use them to define goals, allocate authority, preserve context, and check completion. Shared concepts have one reference page with links from related topics.
+2. **Case studies show the evidence.** Read the conditions, observations, and limits before applying a conclusion to another project. Proposals are distinguished from measured results.
+3. **Design decisions explain the tradeoffs.** Use the reasons and reconsideration criteria to assess whether a choice fits a task. Git preserves document history without making the main articles a session-by-session log.
 
 <details>
 <summary>Will the earlier workflow rules stay unchanged?</summary>
 
 Some rules were written for the models and tools available at the time. They need to be reconsidered as those tools change. More rules, phases, or agents are not evidence of a better result.
 
-The direction we have agreed on is to define the goal, success criteria, and scope together; let the main agent choose how to work; and check the resulting behavior. Important decisions beyond the delegated scope need discussion. Small, reversible choices should not require another approval each time.
+The proposed workflow defines the goal, success criteria, and scope jointly; lets the main agent choose how to work; and checks the resulting behavior. Important decisions beyond the delegated scope need discussion. Small, reversible choices should not require another approval each time.
 
 </details>
 
-## How we will judge progress
+## Evaluation criteria
 
-Readable code, reuse, focused documentation, and tests are starting points. We plan to use small changes and [observations from AgentDeck](../../experiments/agentdeck/) to ask:
+Readable code, reuse, focused documentation, and tests are starting points. Evaluation should use small changes and [observations from AgentDeck](../../experiments/agentdeck/) to examine:
 
 - Can an agent find the right place to work and the code it can reuse?
 - Does the work avoid repetition caused by outdated explanations or duplicate implementation?

@@ -10,6 +10,8 @@
   --wf-action: #c4a173;
   --wf-action-hover: #ddbf99;
   --wf-action-text: #191b1c;
+  --wf-proposal: #a2c9bd;
+  --wf-proposal-soft: #263532;
 
   --sl-color-accent-low: #34312b;
   --sl-color-accent: #d4b28a;
@@ -43,6 +45,8 @@
   --wf-action: #795027;
   --wf-action-hover: #603b20;
   --wf-action-text: #fff8ed;
+  --wf-proposal: #315f55;
+  --wf-proposal-soft: #e9efe8;
 
   --sl-color-accent-low: #eadac1;
   --sl-color-accent: #865126;
@@ -418,6 +422,49 @@ body.home, .workshop-page .main-frame {
   .workshop-header .header-theme { padding-inline-start: .5rem; }
   .workshop-header button[data-open-modal] { width: 44px; justify-content: center; padding: .5rem; }
   .workshop-header button[data-open-modal] > span, .workshop-header button[data-open-modal] kbd { display: none; }
+}
+
+.sl-markdown-content .document-table {
+  max-width: 100%;
+  margin-block: 1.5rem;
+  overflow-x: auto;
+  border: 1px solid var(--wf-rule);
+  border-radius: 6px;
+  background: var(--wf-paper);
+  color: var(--wf-ink);
+}
+.sl-markdown-content .document-table table {
+  display: table;
+  width: 100%;
+  min-width: 32rem;
+  margin: 0;
+  table-layout: fixed;
+  font-size: .95rem;
+  line-height: 1.75;
+}
+.sl-markdown-content .document-table :is(th, td) {
+  padding: 1rem 1.1rem;
+  vertical-align: top;
+  text-align: start;
+  border-bottom: 1px solid var(--wf-rule);
+}
+.sl-markdown-content .document-table th {
+  background: var(--wf-soft);
+  font-size: .85rem;
+  font-weight: 700;
+}
+.sl-markdown-content .document-table tr:last-child td { border-bottom: 0; }
+.document-table strong { font-weight: 700; color: var(--wf-ink); }
+.sl-markdown-content .document-table--comparison :is(th, td):first-child { border-inline-end: 1px solid var(--wf-rule); }
+.document-table--comparison th:first-child,
+.document-table--comparison td:first-child strong { color: var(--wf-accent); }
+.sl-markdown-content .document-table--comparison th:last-child { background: var(--wf-proposal-soft); color: var(--wf-proposal); }
+.document-table--comparison td:last-child strong { color: var(--wf-proposal); }
+.document-table--comparison td strong { display: inline-block; margin-bottom: .35rem; }
+.sl-markdown-content .document-table--steps :is(th, td):first-child { width: 27%; background: var(--wf-soft); }
+@media (max-width: 40rem) {
+  .sl-markdown-content .document-table--steps table { min-width: 0; }
+  .sl-markdown-content .document-table--steps :is(th, td) { padding: .8rem .65rem; }
 }
 
 /* Document diagrams remain readable without scripts and follow the reading-column width. */

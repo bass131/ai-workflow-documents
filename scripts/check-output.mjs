@@ -77,5 +77,5 @@ for (const file of files.filter(file => /\.(?:html|js|json|css|svg|xml|txt|md|ma
 }
 assert(existsSync(resolve(root, 'pagefind/pagefind.js')), 'Missing search bundle');
 const index = JSON.parse(readFileSync(resolve(root, 'pagefind/pagefind-entry.json'), 'utf8'));
-for (const {code} of languages) assert(index.languages[code]?.page_count >= 9, 'Missing search pages for ' + code);
+for (const {code} of languages) assert(index.languages[code]?.page_count >= 10, 'Missing search pages for ' + code);
 console.log('PASS ' + htmlFiles.length + ' HTML pages, ' + references + ' internal references, English/Korean search indexes, public-output scan (' + base + ')');

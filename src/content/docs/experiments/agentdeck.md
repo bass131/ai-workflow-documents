@@ -2,10 +2,12 @@
 title: Lessons from AgentDeck
 description: Control-flow limits revealed by a stop-check experiment and a proposal for the next runner.
 ---
+[AgentDeck](../../projects/agentdeck/) is a desktop AI coding workspace. This case study examines checks used in its development workflow.
+
 **A case study that reads earlier design and execution records alongside an isolated hook experiment, and narrows the claims to what the evidence supports.** Based on an evaluation dated September 17, 2026.
 
 :::note[Scope of the evidence]
-Here, a hook is a check script run when work starts or stops. The repository was not audited again and the experiment was not rerun while building this site.
+Here, a hook is a check script run when work starts or stops. The observations below come from the earlier isolated experiment. The design update dated September 18, 2026 adds no new experiment results or full repository audit.
 :::
 
 ## Problem · Does a process guarantee an outcome?
@@ -44,7 +46,23 @@ This architecture is a **proposal**. It does not mean that a working runner has 
 
 There is no comparative evidence here that more phases or agents are better. Preserve useful explanations and constraints while examining both the costs and benefits of the process.
 
-## Next experiment · Change one factor at a time
+## Application · Reuse execution, verify completion
+
+**Proposed application:** Retain the Claude Agent SDK connection and use Codex App Server when adding Codex. Keep AgentDeck’s shared responsibilities focused on goals, verification, and resumption. The [design choices](../../design/decisions/) explain the tradeoffs; this is not a completed integration.
+
+**The earlier refinement branch is on hold, with reuse still possible.** It has not been selected as the next starting point or marked for disposal. Its code, documents, and tests remain available for comparison after the new design is clear.
+
+<div class="document-table document-table--steps" role="region" aria-labelledby="application--reuse-execution-verify-completion" tabindex="0">
+
+| Step | What to establish |
+| --- | --- |
+| **01 · Design** | **Describe responsibilities and completion conditions.** Define the authority boundary, verification evidence, limits, and resumption behavior before implementation. |
+| **02 · Reuse** | **Compare against that design.** Inspect candidate branches and select useful code and tests; do not assume a branch name establishes its suitability. |
+| **03 · Trial** | **Observe a small real task.** Check missing or failed verification, code changes after a pass, and interruption and resumption. |
+
+</div>
+
+### Compare one factor at a time
 
 Compare the existing and reduced approaches using the same starting code, inputs, model, and completion criteria. Begin with one factor, such as how often a new session starts. Record correctness, regressions, total cost including setup, supervision and resumption, and user interventions.
 

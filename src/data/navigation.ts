@@ -11,6 +11,7 @@ export const documentNavigation = [
     { label: 'TDD and completion checks', translations: { ko: 'TDD와 완료 검증' }, slug: 'workflow/verification' },
   ] },
   { label: 'Case studies', translations: { ko: '사례 연구' }, items: [
+    { label: 'What is AgentDeck?', translations: { ko: 'AgentDeck 소개' }, slug: 'projects/agentdeck' },
     { label: 'Lessons from AgentDeck', translations: { ko: 'AgentDeck에서 배운 것' }, slug: 'experiments/agentdeck' },
   ] },
   { label: 'Design choices', translations: { ko: '설계와 변화' }, items: [

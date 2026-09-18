@@ -2,16 +2,20 @@
 title: TDD and completion checks
 description: Judge completion using meaningful failing tests and check results from the final code.
 ---
-Tests provide evidence that reduces regression risk. They do not prove the absence of every defect.
+**An agent reports that work is ready; the proposed runner checks whether it qualifies as complete.** Tests provide evidence that reduces regression risk. They do not prove the absence of every defect.
 
 ## Sequence for behavior changes
 
-| Step | Check | Avoid |
-| --- | --- | --- |
-| RED · confirm failure | Does the check fail because the expected behavior is absent? | Counting installation or syntax errors as a failure of the required behavior |
-| GREEN · implement | Does the implementation resolve that failure and pass? | Deleting checks or changing expectations for convenience |
-| Refactor · when needed | Is behavior preserved after structural changes? | Rewriting without a purpose |
-| Check regressions | Does the final code preserve related existing behavior? | Declaring completion using results from before the edit |
+<div class="document-table document-table--steps" role="region" aria-labelledby="sequence-for-behavior-changes" tabindex="0">
+
+| Step | What establishes progress |
+| --- | --- |
+| **RED · Confirm failure** | **The expected behavior is absent.** Installation and syntax errors do not demonstrate that failure. |
+| **GREEN · Implement** | **The implementation resolves the failure.** Do not delete checks or weaken expectations merely to pass. |
+| **Refactor · If useful** | **Behavior stays the same.** Make structural changes for a concrete maintenance need. |
+| **Check regressions** | **Related behavior still works in the final code.** Results from before an edit are not sufficient. |
+
+</div>
 
 AI develops examples and checks from observable criteria agreed with the user. Tests limited to convenient internal implementation details do not establish whether those criteria are met.
 
@@ -21,17 +25,35 @@ Changes limited to comments or explanations do not need an artificial RED. Check
 
 ## Separate “complete” from a verification request
 
-The following is a **runner design that has not been implemented**. When AI reports completion, the runner would move into a verification-requested state.
+The following is a **runner design that has not been implemented**. A new task starts with agreed criteria; a resumed task also restores its records and remaining budget.
 
-```text title="Proposed completion decision"
-Implementation → verification request → inspect required checks and code
-                                         ├─ Failed or unrun → cannot complete
-                                         ├─ Code changed after checks → reverify
-                                         └─ All required checks pass on current code
-                                              + criteria met → complete
-```
+<figure class="workflow-map" aria-labelledby="completion-map-caption">
+  <figcaption id="completion-map-caption"><strong>Start or resume → Work → Verify</strong><span>Proposed flow · Completion authority belongs to the controller.</span></figcaption>
+  <ol class="workflow-map-steps" role="list">
+    <li><span class="workflow-map-label">01 · CONTROLLER</span><strong>Load the task</strong><p>Read the criteria, allowed scope, and attempts already used.</p></li>
+    <li><span class="workflow-map-label">02 · AGENT</span><strong>Implement and request checks</strong><p>Use the official agent runtime to work on the change. Report when it is ready.</p></li>
+    <li><span class="workflow-map-label">03 · CONTROLLER</span><strong>Verify the candidate</strong><p>Run required checks and tie the results to the code and inputs checked.</p></li>
+  </ol>
+  <ul class="workflow-map-outcomes" role="list">
+    <li><strong>Checks pass + criteria met → Complete</strong><span>Save the evidence for that candidate.</span></li>
+    <li><strong>Checks fail → Revise within the limit</strong><span>Carry forward the attempts already used.</span></li>
+    <li><strong>Checks missing or code changed → Verify again</strong><span>Do not use an earlier result to complete new work.</span></li>
+    <li><strong>Limit reached → Stop and record</strong><span>Leave the cause and remaining work for resumption.</span></li>
+  </ul>
+  <p class="workflow-map-note">Consequential decisions outside the agreed scope need user input. Small, reversible choices can continue within that scope.</p>
+</figure>
 
 A commit alone may not identify the code tested: uncommitted files and configuration can affect results. The runner needs to identify both the check inputs and the actual working tree.
+
+## What prevents bypassing a check?
+
+**A skill can explain a check without making it mandatory.** If the agent can skip the checker and edit the official completion record, the workflow is still optional. Switching from a CLI to an SDK does not, by itself, fix this.
+
+The proposed boundary is about authority: the agent can change the implementation and propose tests, but cannot rewrite the required verification policy, trusted results, or official completion state. The controller runs the checks rather than accepting a reported pass. A separate folder or process is insufficient if the agent still has permission to change it.
+
+**Hypothetical example:** after fixing language preference storage, the agent reports “done.” If the required return-visit check has not run, the controller leaves the task incomplete. Changes to agreed acceptance criteria need review; the agent cannot weaken them just to pass.
+
+This can prevent **unverified completion**, not force an agent to cooperate or guarantee that every intermediate action follows a plan. The permission boundary and check environment still need implementation and testing.
 
 ## Responsibilities proposed for the runner
 
