@@ -2,6 +2,7 @@
 
 ## 먼저 위치를 고른다
 
+- `workflow/why-this-site.md`: 사이트를 만든 이유와 확인하려는 방향
 - `workflow/overview.md`: 전체 흐름과 공통 원칙
 - `workflow/goals-and-scope.md`: 목표·성공 기준·포함/제외 범위
 - `workflow/autonomy.md`: 요청 안의 자율성과 확인할 결정
@@ -77,11 +78,11 @@ Starlight가 title로 H1을 만들므로 본문에 H1을 반복하지 않습니�
 - 공유 UI는 src/content/i18n/en.json과 ko.json, Astro.locals.t로 번역합니다. 추가 키는 src/content.config.ts의 스키마에 등록합니다. 검색·테마·목차 등 기본 UI는 Starlight 번역을 사용합니다.
 - 홈과 네 상황은 src/data/home-en.json과 home-ko.json에 있습니다. src/data/home.ts의 타입이 두 언어의 필수 항목을 검사합니다. 홈 구조는 src/components/WorkshopHome.astro 하나를 공유합니다.
 - 문서 간 상대 링크는 언어 안에 머뭅니다. 공통 공개 자산 evidence/로 연결할 때는 영어 문서의 ../../evidence/와 한국어 문서의 ../../../evidence/처럼 깊이를 맞춥니다. locale가 있는 Astro 링크는 languageHref를, 공통 자산은 BASE_URL을 사용합니다.
-- 언어 전환은 같은 slug의 문서로 이동합니다. 누락된 문서는 Starlight의 기본 영어 본문과 미번역 안내를 표시하며 본문 lang도 영어로 표시합니다. 공개한 영어·한국어 7개 문서는 모두 번역되어 있습니다.
+- 언어 전환은 같은 slug의 문서로 이동합니다. 누락된 문서는 Starlight의 기본 영어 본문과 미번역 안내를 표시하며 본문 lang도 영어로 표시합니다. 공개한 영어·한국어 8개 문서는 모두 번역되어 있습니다.
 
 첫 방문은 영어입니다. 사용자가 언어 선택기를 직접 바꿀 때만 wf-language를 localStorage에 기록합니다. 대표 홈으로 재방문하면 저장 언어 홈으로 이동하고, 명시적인 문서 또는 /ko/ 주소는 해당 경로의 언어를 우선합니다. 문서 링크를 여는 것만으로 저장 선호를 덮어쓰지 않습니다. 내부 탐색은 현재 경로의 언어를 따릅니다. 브라우저 언어 자동감지나 계정 동기화는 하지 않습니다. 손상·미지원 저장값과 저장소 차단은 대표 홈에서 영어로 돌아갑니다. 차단 상태에서도 직접 언어 URL과 현재 언어 전환은 사용할 수 있습니다. 테마와 문서 목록은 기존 별도 저장키를 유지합니다.
 
-언어를 추가하려면 레지스트리에 코드·경로·이름을 추가하고, 동일 slug 문서·UI JSON·home-코드.json을 번역한 다음 home.ts에 사전을 등록합니다. 수동선택/저장검증/언어경로/404는 목록을 따라 확장됩니다. sidebar label의 translations에도 새 코드의 이름을 넣고, check-i18n-browser.mjs의 언어별 검색어를 추가합니다. 검색 색인은 각 언어의 홈과 7문서가 있어야 통과합니다. 번역을 점진적으로 시작할 때는 미번역 안내를 확인하고 공개 범위를 별도로 검토합니다.
+언어를 추가하려면 레지스트리에 코드·경로·이름을 추가하고, 동일 slug 문서·UI JSON·home-코드.json을 번역한 다음 home.ts에 사전을 등록합니다. 수동선택/저장검증/언어경로/404는 목록을 따라 확장됩니다. sidebar label의 translations에도 새 코드의 이름을 넣고, check-i18n-browser.mjs의 언어별 검색어를 추가합니다. 검색 색인은 각 언어의 홈과 8문서가 있어야 통과합니다. 번역을 점진적으로 시작할 때는 미번역 안내를 확인하고 공개 범위를 별도로 검토합니다.
 
 GitHub Pages는 단일 404.html을 제공하므로 /ko/ 아래 없는 주소는 /ko/404/ 안내로 연결합니다. 이 페이지는 noindex이며 문서 목록·언어 선택·해당 언어 홈 링크를 제공합니다. 언어별 canonical/alternate, 검색 분리, 320–1440px 조작 영역, 테마·목록 선호 유지, 저장 실패와 URL 우선순위는 npm run test:pages에서 검사합니다.
 

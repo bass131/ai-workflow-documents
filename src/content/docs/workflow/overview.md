@@ -2,6 +2,8 @@
 title: Workflow overview
 description: Agree on the goal, split work only as needed, and judge completion using evidence from the final code.
 ---
+For the problems behind this workflow, start with [why this site exists](../why-this-site/).
+
 Important work starts with **observable criteria for success and failure**. AI chooses how to implement the work, while the evidence determines whether it is complete.
 
 ## 01 · Agree on the goal

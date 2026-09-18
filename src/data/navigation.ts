@@ -1,6 +1,7 @@
 export const documentNavigation = [
   { label: 'Start here', translations: { ko: '시작' }, items: [
     { label: 'Home', translations: { ko: '홈' }, link: '/' },
+    { label: 'Why this site exists', translations: { ko: '이 사이트를 만든 이유' }, slug: 'workflow/why-this-site' },
     { label: 'Workflow overview', translations: { ko: '전체 흐름' }, slug: 'workflow/overview' },
   ] },
   { label: 'Workflow guides', translations: { ko: '워크플로 가이드' }, items: [

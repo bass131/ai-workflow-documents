@@ -52,7 +52,7 @@ export async function checkI18n(browser, origin, base, capture = async () => {})
     assert.equal(await newTab.locator('html').getAttribute('lang'), 'ko');
     await newTab.close();
 
-    const docs = ['workflow/overview/','workflow/goals-and-scope/','workflow/autonomy/','workflow/phase-and-resume/','workflow/verification/','experiments/agentdeck/','design/decisions/'];
+    const docs = ['workflow/why-this-site/','workflow/overview/','workflow/goals-and-scope/','workflow/autonomy/','workflow/phase-and-resume/','workflow/verification/','experiments/agentdeck/','design/decisions/'];
     for (const item of languages) {
       const home = languageHref(item.code, '', base);
       await go(home);
