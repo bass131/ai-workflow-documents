@@ -73,6 +73,9 @@
 body { letter-spacing: -.012em; }
 .sl-markdown-content { line-height: 1.85; word-break: keep-all; overflow-wrap: anywhere; }
 .sl-markdown-content h2 { letter-spacing: -.04em; }
+.sl-markdown-content .principle-list > ol > li > strong:first-child {
+  color: var(--wf-accent);
+}
 .sl-markdown-content p, .sl-markdown-content li { font-size: 1rem; }
 .site-title {
   font-family: Georgia, 'Times New Roman', serif;
@@ -466,6 +469,19 @@ body.home, .workshop-page .main-frame {
   .sl-markdown-content .document-table--steps table { min-width: 0; }
   .sl-markdown-content .document-table--steps :is(th, td) { padding: .8rem .65rem; }
 }
+
+.sl-markdown-content .workflow-illustration {
+  margin: 1rem 0 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--wf-rule);
+  border-radius: 6px;
+  background: var(--wf-paper);
+}
+.sl-markdown-content .workflow-illustration p { margin: 0; }
+.workflow-illustration img { display: block; width: 100%; height: auto; margin: 0; }
+.workflow-illustration figcaption { padding: .65rem .85rem; font-size: .8rem; line-height: 1.6; }
+.workflow-illustration figcaption span { display: block; color: var(--wf-muted); font-size: .72rem; }
+.goal-flow .workflow-map-steps > li:last-child { border-style: dashed; }
 
 /* Document diagrams remain readable without scripts and follow the reading-column width. */
 .sl-markdown-content .workflow-map {

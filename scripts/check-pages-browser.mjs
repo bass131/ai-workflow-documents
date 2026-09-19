@@ -70,9 +70,9 @@ try {
   await page.locator('starlight-theme-select select:visible').selectOption('light');
 
   await capture(page, 'docs-desktop-light');
-  const tocLink = page.locator('.right-sidebar starlight-toc a').filter({ hasText: '02 · 필요한 만큼 나눈다' });
+  const tocLink = page.locator('.right-sidebar starlight-toc a').filter({ hasText: '02 · 단계로 나누어서 관리한다' });
   await tocLink.click();
-  await page.waitForFunction(() => [...document.querySelectorAll('.right-sidebar a')].some(link => link.textContent.includes('02 · 필요한 만큼 나눈다') && link.getAttribute('aria-current') === 'true'));
+  await page.waitForFunction(() => [...document.querySelectorAll('.right-sidebar a')].some(link => link.textContent.includes('02 · 단계로 나누어서 관리한다') && link.getAttribute('aria-current') === 'true'));
   await ensureMenuOpen();
   const group = page.locator('.workshop-sidebar details').filter({ has: page.locator('summary', { hasText: '워크플로 가이드' }) });
   await group.locator('summary').click();
@@ -175,7 +175,7 @@ try {
     }
   }
   assert.equal(await page.locator('.section-nav a[aria-current]').textContent(), '가이드');
-  const anchor = page.locator('.right-sidebar starlight-toc a:visible').filter({ hasText: '02 · 필요한 만큼 나눈다' });
+  const anchor = page.locator('.right-sidebar starlight-toc a:visible').filter({ hasText: '02 · 단계로 나누어서 관리한다' });
   await anchor.click();
   await page.waitForFunction(() => {
     const heading = document.getElementById(decodeURIComponent(location.hash.slice(1)));

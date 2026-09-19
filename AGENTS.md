@@ -8,6 +8,7 @@
 - 문서 위치·메타데이터·문체·근거: [docs/authoring.md](docs/authoring.md)
 - 실제 배포 대상/상태와 갱신·복구: [docs/deployment.md](docs/deployment.md)
 - 당시 검증 기록: [VALIDATION.md](VALIDATION.md)
+- 다음 작업과 미정인 항목: [docs/next-steps.md](docs/next-steps.md)
 
 스택은 Astro + Starlight + TypeScript, npm이다. 정확한 버전은 package.json / package-lock.json, 실행 Node 계열은 .node-version에 있다. 홈은 src/components/WorkshopHome.astro, 문서는 src/content/docs, 공유 문서 목록은 src/data/navigation.ts, Starlight 설정은 astro.config.mjs, 공개 파일은 public, 검증 도구는 scripts에 있다.
 
